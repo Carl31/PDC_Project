@@ -1,7 +1,7 @@
 /*
  * The menu for the words database
  */
-package pdc_project;
+package project2;
 
 import java.util.ArrayList;
 import java.util.Collections;

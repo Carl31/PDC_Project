@@ -1,7 +1,7 @@
 /*
  * User Statistics menu that is run by the PDC_Project main class
  */
-package pdc_project;
+package project2;
 
 import java.util.ArrayList;
 import java.util.Collections;

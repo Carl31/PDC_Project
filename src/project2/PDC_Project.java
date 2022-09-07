@@ -1,7 +1,7 @@
 /*
  * Driver class for project.
  */
-package pdc_project;
+package project2;
 
 import java.io.File;
 import java.util.HashMap;

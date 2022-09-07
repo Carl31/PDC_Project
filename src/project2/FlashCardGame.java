@@ -1,7 +1,7 @@
 /*
  * A flashcard game class which is ran by GameMenu class
  */
-package pdc_project;
+package project2;
 
 import java.util.ArrayList;
 import java.util.HashMap;

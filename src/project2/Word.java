@@ -1,7 +1,7 @@
 /*
  * Class for a single word (eng and esp)
  */
-package pdc_project;
+package project2;
 
 /**
  *

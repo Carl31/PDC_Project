@@ -1,7 +1,7 @@
 /*
  * An interface for a FlashCard Game
  */
-package pdc_project;
+package project2;
 
 /**
  *

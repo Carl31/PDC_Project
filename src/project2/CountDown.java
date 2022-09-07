@@ -1,7 +1,7 @@
 /*
  * A countdown timer for time attack mode.
  */
-package pdc_project;
+package project2;
 
 import java.util.TimerTask;
 

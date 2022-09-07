@@ -1,7 +1,7 @@
 /*
  * A revision flashcard game class which is ran by GameManu class
  */
-package pdc_project;
+package project2;
 
 import java.util.ArrayList;
 import java.util.HashSet;

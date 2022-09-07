@@ -3,7 +3,7 @@
  * Project 1 - used for reading/writing from text files (userdata and words database).
  * Project 2 - used for reading/writing from database.
  */
-package pdc_project;
+package project2;
 
 import java.util.Map;
 

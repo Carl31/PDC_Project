@@ -1,7 +1,7 @@
 /*
  * A flash card object for a FlashCardGame.
  */
-package pdc_project;
+package project2;
 
 /**
  *

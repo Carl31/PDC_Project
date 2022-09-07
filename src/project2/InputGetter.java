@@ -1,7 +1,7 @@
 /*
  * Static helper class for getting valid user input
  */
-package pdc_project;
+package project2;
 
 import java.util.Scanner;
 

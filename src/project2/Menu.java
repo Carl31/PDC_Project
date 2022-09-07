@@ -1,7 +1,7 @@
 /*
  * A Menu abstract class for all application's menu types.
  */
-package pdc_project;
+package project2;
 
 /**
  *

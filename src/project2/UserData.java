@@ -1,7 +1,7 @@
 /*
  * Object to hold data for each user
  */
-package pdc_project;
+package project2;
 
 import java.util.HashSet;
 

@@ -1,7 +1,7 @@
 /*
  * A class to download and upload data from a text file. Used for getting/setting user data.
  */
-package pdc_project;
+package project2;
 
 import java.io.BufferedReader;
 import java.io.File;

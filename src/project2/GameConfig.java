@@ -1,7 +1,7 @@
 /*
  * A class to hold game configuration data for replayability
  */
-package pdc_project;
+package project2;
 
 /**
  *

@@ -1,0 +1,616 @@
+confiar:to trust
+enriquecer:to enrich
+notar:to note
+elegir:to elect
+preferir:to prefer
+acabar:to end
+mantener:to maintain
+recibir:to receive
+callarse:to keep quiet
+doler:to hurt
+participar:to participate
+viajar:to travel
+recordar:to recall
+influir:to influence
+pedir:to request
+perdonar:to forgive
+entrevistar:to interview
+lanzar:to throw
+llover:to rain
+producir:to produce
+averiguar:to find out
+verificar:to verify
+quemarse:to burn up
+crucificar:to crucify
+matricular:to enrol
+nevar:to snow
+fortalecer:to fortify
+sonreír:to smile
+satirizar:to satirize
+chocar:to crash
+enflaquecerse:to get thin
+oponerse:to oppose
+gritar:to shout
+mostrar:to show
+explicar:to explain
+enfermar:to make ill
+guardar:to guard
+regatear:to haggle
+registrar:to register
+sacar:to take out
+evacuar:to evacuate
+importar:to import
+comer:to eat
+diseñar:to design
+esquiar:to ski
+dejar:to let
+durar:to last
+alquilar:to rent
+calentarse:to get heated
+llevar:to wear
+acordarse:to remember
+ahorcar:to hang
+emigrar:to emigrate
+envejecerse:to get old
+apagar:to turn off
+modificar:to modify
+alentar:to encourage
+prometer:to promise
+ser:to be
+combatir:to combat
+sacrificar:to sacrifice
+inventar:to invent
+cansar:to tire
+estudiar:to study
+mandar:to order
+depositar:to deposit
+preparar:to prepare
+afeitar:to shave
+proponer:to propose
+glorificar:to glorify
+contribuir:to contribute
+reinar:to reign
+cancelar:to cancel
+atender:to attend to
+echar:to throw
+insistir:to insist
+hablar:to speak
+regalar:to give
+emborrachar:to make drunk
+encontrar:to find
+permitir:to permit
+introducir:to put in
+enriquecerse:to get rich
+comprender:to comprehend
+ahorrar:to save
+censurar:to censor
+invocar:to invoke
+mudarse:to relocate
+comunicar:to communicate
+caminar:to walk
+llorar:to cry
+avisar:to warn
+calmar:to calm
+creer:to believe
+cazar:to hunt
+celebrar:to celebrate
+reñir:to quarrel
+despertarse:to wake up
+aburrirse:to get bored
+buscar:to search for
+soler:to be used to
+llamar:to call
+adivinar:to guess
+amanecer:to dawn
+emborracharse:to get drunk
+aportar:to contribute
+aburrir:to bore
+conservar:to conserve
+sentir:to feel
+atravesar:to cross over
+conjugar:to conjugate
+almorzar:to have lunch
+consentir:to consent to
+mentir:to lie
+saludar:to greet
+despedir:to say goodbye to
+lograr:to achieve
+untar:to anoint
+pensar:to think
+vomitar:to vomit
+adorar:to adore
+dudar:to doubt
+enviar:to send
+civilizar:to civilize
+acercar:to bring near
+extinguir:to extinguish
+navegar:to navigate
+arreglar:to arrange
+abrir:to open
+apostar:to bet
+cenar:to eat supper
+descansar:to rest
+reducir:to reduce
+levantar:to lift
+colonizar:to colonize
+iniciar:to initiate
+consistir:to consist
+graduarse:to graduate
+replicar:to reply
+calmarse:to calm down
+bautizar:to baptize
+pintar:to paint
+practicar:to practice
+bajar:to lower
+eliminar:to eliminate
+jurar:to swear
+sustituir:to substitute
+mover:to move
+ofender:to offend
+beber:to drink
+cargar:to load
+limpiar:to clean
+predecir:to predict
+indicar:to indicate
+votar:to vote
+rogar:to plead
+saber:to know
+desagradar:to displease
+irse:to go away
+perseguir:to pursue
+repetir:to repeat
+pagar:to pay
+haber:to have
+apretar:to be too tight
+arrojar:to throw
+traducir:to translate
+pescar:to fish
+copiar:to copy
+despertar:to awaken
+decir:to say
+inmigrar:to immigrate
+agorar:to prophesy
+valer:to be worth
+envejecer:to age
+ir:to go
+hallar:to find
+crear:to create
+desayunar:to eat breakfast
+aprobar:to approve
+dibujar:to draw
+simbolizar:to symbolize
+perder:to lose
+aplaudir:to applaud
+convertir:to convert
+zambullirse:to dive
+enflaquecer:to make thin
+publicar:to publish
+tañer:to strum
+aliviar:to alleviate
+prepararse:to get ready
+montar:to mount
+triunfar:to triumph
+querer:to want
+acostumbrar:to be accustomed to
+satisfacer:to satisfy
+hacer:to do
+plantar:to plant
+maquillar:to put make-up on
+besar:to kiss
+tropezar:to trip
+vestir:to dress
+parecer:to seem
+permanecer:to remain
+clarificar:to clarify
+respirar:to breathe
+picar:to prick
+echarse:to throw myself
+poner:to put
+surgir:to arise
+decidir:to decide
+faltar:to lack
+dedicarse:to devote myself
+rezar:to pray
+visitar:to visit
+amar:to love
+detener:to halt
+gobernar:to govern
+asustar:to frighten
+callar:to keep quiet about
+enfermarse:to get sick
+expresar:to express
+prohibir:to prohibit
+tapar:to cover
+acordar:to agree
+convidar:to invite
+felicitar:to congratulate
+poseer:to possess
+quemar:to burn
+bailar:to dance
+amenazar:to threaten
+ofrecer:to offer
+errar:to err
+recoger:to pick up
+romper:to break
+calcular:to calculate
+madurar:to mature
+sobrevivir:to survive
+maquillarse:to put on make-up
+disgustar:to dislike
+enfadar:to upset
+caer:to fall
+meter:to insert
+aconsejar:to advise
+reservar:to reserve
+interpretar:to interpret
+proteger:to protect
+regar:to water
+borrar:to erase
+rehusar:to refuse
+unir:to unite
+escribir:to write
+investigar:to investigate
+servir:to serve
+preguntarse:to wonder
+andar:to operate
+evitar:to avoid
+platicar:to talk
+entrar:to enter
+quebrar:to break
+aceptar:to accept
+interesar:to interest
+abusar:to abuse
+atraer:to attract
+coser:to sew
+confiscar:to confiscate
+oír:to hear
+afirmar:to make firm
+bañar:to give a bath
+cobrar:to charge
+medir:to measure
+contar:to count
+peinarse:to comb my hair
+deber:to owe
+crecer:to grow
+cesar:to cease
+acompañar:to accompany
+constituir:to constitute
+subir:to go up
+enamorarse:to fall in love
+competir:to compete
+disfrutar:to enjoy
+ladrar:to bark
+cruzar:to cross
+doblar:to double
+avanzar:to advance
+apreciar:to appreciate
+destruir:to destroy
+enojar:to anger
+purificar:to purify
+conseguir:to get
+tocar:to touch
+necesitar:to need
+condenar:to condemn
+estar:to be
+heredar:to inherit
+instalar:to install
+significar:to signify
+entusiasmar:to excite
+enterarse:to find out
+vestirse:to get dressed
+cumplir:to fulfil
+pasar:to pass
+aumentar:to increase
+morir:to die
+cepillar:to brush
+calentar:to heat
+corregir:to correct
+devorar:to devour
+exhibir:to exhibit
+comprar:to buy
+seguir:to follow
+aplicar:to apply
+declarar:to declare
+invertir:to invest
+correr:to run
+cocinar:to cook
+colocar:to place
+componer:to compose
+trabajar:to work
+suspirar:to sigh
+acostar:to put to bed
+requerir:to require
+criar:to raise
+duchar:to douche
+escuchar:to listen to
+preservar:to preserve
+establecer:to establish
+presentir:to have a premonition
+gustar:to like
+adornar:to adorn
+freír:to fry
+odiar:to hate
+extender:to extend
+alegrarse:to be glad
+intentar:to try
+tragar:to swallow
+entretener:to entertain
+fascinar:to fascinate
+lavarse:to wash up
+obtener:to obtain
+lamentar:to lament
+manejar:to handle
+marcar:to mark
+bordar:to embroider
+llamarse:to be named
+vivir:to live
+controlar:to control
+pelear:to fight
+explotar:to exploit
+conversar:to converse
+sorprender:to surprise
+equivocar:to mistake
+broncearse:to get a suntan
+quedar:to stay
+desarrollar:to develop
+educar:to educate
+renovar:to renew
+acostarse:to go to bed
+construir:to build
+consumir:to consume
+volver:to return
+legalizar:to legalize
+generalizar:to generalize
+efectuar:to effect
+colgar:to hang
+descender:to descend
+desaparecer:to disappear
+helar:to freeze
+batir:to beat
+desear:to desire
+cuidar:to take care of
+deprimir:to depress
+renacer:to be reborn
+merecer:to deserve
+llenar:to fill
+quejarse:to complain
+mezclar:to mix
+clasificar:to classify
+acortar:to shorten
+encantar:to delight
+detestar:to detest
+entusiasmarse:to get excited
+sufrir:to suffer
+charlar:to chat
+imprimir:to print
+olvidar:to forget
+aguantar:to put up with
+convenir:to be advisable
+atacar:to attack
+demostrar:to demonstrate
+toser:to cough
+entregar:to deliver
+planchar:to iron
+incluir:to include
+sentarse:to sit down
+pegar:to stick
+criarse:to grow up
+advertir:to notice
+yacer:to lie
+vaciar:to empty
+levantarse:to get up
+soportar:to stand
+brindar:to toast
+renunciar:to renounce
+reír:to laugh
+tardar:to delay
+merendar:to have a snack
+obedecer:to obey
+cultivar:to cultivate
+dedicar:to dedicate
+luchar:to struggle
+sugerir:to suggest
+conocer:to know
+actuar:to act
+anunciar:to announce
+saltar:to jump
+secar:to dry
+entender:to understand
+explorar:to explore
+distinguir:to distinguish
+huir:to flee
+provocar:to provoke
+regir:to rule
+parar:to stop
+atreverse:to dare
+florecer:to flourish
+robar:to rob
+conquistar:to conquer
+bañarse:to take a bath
+coger:to catch
+asociar:to associate
+causar:to cause
+caber:to fit
+proseguir:to proceed
+admirar:to admire
+compartir:to share
+engañar:to deceive
+invitar:to invite
+exigir:to demand
+confirmar:to confirm
+firmar:to sign
+describir:to describe
+lastimar:to hurt
+graduar:to adjust
+organizar:to organize
+cansarse:to get tired
+reportar:to generate
+ponerse:to put on
+abrazar:to hug
+descubrir:to discover
+protestar:to protest
+gruñir:to grunt
+resultar:to turn out
+funcionar:to function
+volar:to fly
+acostumbrarse:to get accustomed to
+emplear:to employ
+realizar:to carry out
+salir:to leave
+traer:to bring
+reparar:to repair
+deshacer:to undo
+vender:to sell
+conducir:to drive
+terminar:to finish
+enamorar:to inspire love in
+herir:to injure
+tener:to have
+tirar:to throw
+cortar:to cut
+ilustrar:to illustrate
+presentar:to introduce
+distribuir:to distribute
+arrepentirse:to repent
+responder:to respond
+contaminar:to contaminate
+admitir:to admit
+padecer:to endure
+fabricar:to manufacture
+invadir:to invade
+acercarse:to approach
+asistir:to attend
+mirar:to watch
+repasar:to review
+caracterizar:to characterize
+nadar:to swim
+variar:to vary
+bucear:to skin-dive
+agradecer:to be thankful for
+empezar:to begin
+respetar:to respect
+acontecer:to take place
+afligir:to afflict
+tratar:to treat
+dirigir:to direct
+desagradecer:to be unthankful for
+esperar:to hope
+aspirar:to breath in
+inducir:to induce
+guiar:to guide
+salvar:to save
+vencer:to overcome
+peinar:to comb
+violar:to violate
+enseñar:to teach
+encender:to light up
+dormir:to sleep
+divertir:to amuse
+temer:to fear
+ayudar:to help
+teñir:to dye
+divorciar:to divorce
+regular:to regulate
+burlar:to evade
+ocurrir:to occur
+cubrir:to cover
+casar:to marry
+cerrar:to close
+contener:to contain
+suponer:to suppose
+barrer:to sweep
+aparecer:to appear
+bendecir:to bless
+reconocer:to recognize
+convencer:to convince
+obligar:to oblige
+usar:to use
+gastar:to spend
+estimar:to estimate
+oler:to smell
+defender:to defend
+burlarse:to mock
+ejercer:to exercise
+nacer:to be born
+soñar:to dream
+lavar:to wash
+exponer:to expose
+dar:to give
+tomar:to take
+pesar:to weigh
+abordar:to board
+jugar:to play
+resolver:to solve
+ver:to see
+acampar:to camp
+disminuir:to diminish
+venir:to come
+abortar:to abort
+utilizar:to utilize
+anhelar:to be eager for
+insultar:to insult
+molestar:to bother
+comenzar:to commence
+formar:to form
+alcanzar:to reach
+castigar:to punish
+masticar:to chew
+abandonar:to abandon
+apoyar:to support
+alegrar:to make happy
+reciclar:to recycle
+culpar:to blame
+prever:to foresee
+depender:to depend
+revelar:to reveal
+fijar:to fix
+decorar:to decorate
+preguntar:to ask
+equivocarse:to make a mistake
+matar:to kill
+llegar:to arrive
+recomendar:to recommend
+ensuciar:to dirty
+escoger:to choose
+devolver:to return
+juntar:to join
+chismear:to gossip
+sentar:to seat
+añadir:to add
+sonar:to sound
+señalar:to point out
+derretir:to melt
+sacudir:to shake
+aprender:to learn
+jactarse:to boast
+negociar:to negotiate
+agradar:to please
+leer:to read
+exportar:to export
+hervir:to boil
+curar:to cure
+torcer:to twist
+continuar:to continue
+ganar:to win
+probar:to taste
+oponer:to put up
+ubicar:to locate
+confesar:to confess
+regresar:to return
+complicar:to complicate
+fingir:to fake
+poder:to be able
+patinar:to skate
+brillar:to shine
+rechazar:to reject
+informar:to inform
+situar:to position
+pertenecer:to belonged
+contestar:to answer
+fumar:to smoke
+suceder:to happen
+ducharse:to take a shower
+negar:to deny
+criticar:to criticize
+costar:to cost
+esconder:to hide
