@@ -167,6 +167,9 @@ public class Database {
         try {
             Statement statement = conn.createStatement();
             statement.executeUpdate("INSERT INTO WordData VALUES(0, 'Hola', 'Hello')");
+            HashSet<Word> tempWords = new HashSet<Word>();
+            tempWords.add(new Word("Hola", "Hello"));
+            updateMappingTable("John", tempWords);
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -176,17 +179,17 @@ public class Database {
     private void updateMappingTable(String username, HashSet<Word> words) {
         // for all words in the set, add the word-user map entry if it already doesn't exist                
         HashSet<Word> incorrectWords = new HashSet<Word>();
-        int userId = 0;
+        String userId = "";
 
         try {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery("SELECT userId FROM UserData WHERE username = '" + username + "'");
 
             if (rs.next()) { // i.e if user found in USERDATA table, get users incorrect words
-                userId = Integer.parseInt(rs.getString("userId"));
+                userId = rs.getString("userId");
 
                 // get hashset of words from user_id to word_id table mappings
-                incorrectWords = getWords(userId);
+                incorrectWords = getWords(Integer.parseInt(userId));
 
             } else { // if user not found, then create new user using the input username
                 throw new SQLException("User not found.");
@@ -204,17 +207,17 @@ public class Database {
         }
 
         // add unaddedWords to the user word mappings...
-        int wordId = 0;
+        String wordId = "";
         try {
             Statement statement = conn.createStatement();
             for (Word word : unaddedWords) {
                 ResultSet rs = statement.executeQuery("SELECT wordId FROM WordData WHERE spanish = '" + word.getSpanish() + "'");
 
                 if (rs.next()) { // i.e if word is found in WORDDATA table, add it in USERWORDMAP table
-                    wordId = Integer.parseInt(rs.getString("wordId"));
+                    wordId = rs.getString("wordId");
 
                     // add userId-wordId table entry
-                    statement.executeUpdate("INSERT INTO USERWORDMAP VALUES(" + userId + ", '" + wordId + "')");
+                    statement.executeUpdate("INSERT INTO USERWORDMAP VALUES(" + userId + ", " + wordId + ")");
 
                 } else { // if user not found, then create new user using the input username
                     throw new SQLException("Word not found.");
