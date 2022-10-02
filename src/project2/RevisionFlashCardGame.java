@@ -23,7 +23,7 @@ public class RevisionFlashCardGame implements CardGame {
     private ArrayList<Word> wordsArray;
     private int finalScore;
 
-    public RevisionFlashCardGame(GameConfig config, UserData data, HashSet<Word> words) {
+    public RevisionFlashCardGame(GameConfig config, UserData data) {
         this.data = data;
         this.cards = new LinkedList<Card>();
         this.finalScore = 0;
@@ -31,7 +31,7 @@ public class RevisionFlashCardGame implements CardGame {
 
         // converts set to list of words
         this.wordsArray = new ArrayList<Word>();
-        for (Word temp : words) {
+        for (Word temp : data.getIncorrectWords()) {
             wordsArray.add(temp);
         }
     }

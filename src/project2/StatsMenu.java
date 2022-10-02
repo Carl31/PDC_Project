@@ -18,16 +18,12 @@ import java.util.logging.Logger;
  *
  * @author carls
  */
-public class StatsMenu extends Menu {
+public class StatsMenu extends Menu { // line 103
 
-    private ReaderWriter udrw;
-    private String username;
-    private HashMap<String, UserData> data;
+    private ModelData data;
 
-    public StatsMenu(ReaderWriter udrw, String username) {
-        this.udrw = udrw;
-        this.username = username;
-        data = (HashMap<String, UserData>) udrw.readFrom();
+    public StatsMenu(ModelData data) {
+        this.data = data;
     }
 
     @Override
@@ -51,7 +47,7 @@ public class StatsMenu extends Menu {
             switch (input) {
                 case (1):
                     try {
-                    printStats(username);
+                    printStats(data.getUsername());
                     TimeUnit.SECONDS.sleep(3);
                 } catch (InterruptedException ex) {
                 }
@@ -80,16 +76,16 @@ public class StatsMenu extends Menu {
     private void printStats(String username) throws InterruptedException {
         System.out.println("\n\tNAME: " + username);
         TimeUnit.SECONDS.sleep(1);
-        System.out.println("\t\tTotal rounds played: " + (data.get(username) != null ? data.get(username).getGamesPlayed() : "0"));
+        System.out.println("\t\tTotal rounds played: " + data.getUser().getGamesPlayed());
         TimeUnit.SECONDS.sleep(1);
-        System.out.println("\t\tCorrect Percentage: " + (data.get(username) != null ? data.get(username).getCorrectPercent() : "0") + "%");
+        System.out.println("\t\tCorrect Percentage: " + data.getUser().getCorrectPercent() + "%");
         TimeUnit.SECONDS.sleep(1);
         System.out.println("\t\tIncorrect words: ");
         int count = 1;
-        if (data.get(username) == null || data.get(username).getIncorrectWords().isEmpty()) {
+        if (data.getUser().getIncorrectWords().isEmpty()) {
             System.out.println("\t\tRevision pile empty!!");
         } else {
-            for (Word temp : data.get(username).getIncorrectWords()) {
+            for (Word temp : data.getUser().getIncorrectWords()) {
                 System.out.println("\t\t" + count + ") " + temp.getSpanish() + " : " + temp.getEnglish());
                 count++;
             }
@@ -104,9 +100,9 @@ public class StatsMenu extends Menu {
 
         // put user name and correctPercentage into a HashMap scores
         HashMap<Float, String> scores = new HashMap<Float, String>();
-        for (Map.Entry<String, UserData> user : data.entrySet()) {
-            scores.put(user.getValue().getCorrectPercent(), user.getKey());
-        }
+//        for (Map.Entry<String, UserData> user : data.entrySet()) { // DB -- need to replace data.entrySet with a HashMap<CorrectPercentage, Username> of ALL users
+//            scores.put(user.getValue().getCorrectPercent(), user.getKey());
+//        }
 
         // add all map entries from scores to a list (for sorting)
         List<Map.Entry<Float, String>> list = new ArrayList<>();

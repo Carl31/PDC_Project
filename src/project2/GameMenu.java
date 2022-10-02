@@ -14,23 +14,14 @@ import java.util.logging.Logger;
  *
  * @author carls
  */
-public class GameMenu extends Menu {
+public class GameMenu extends Menu { // DB line 67
 
-    private final ReaderWriter udrw;
-    private final Map<String, UserData> userData;
-    private final String username;
-    private final ArrayList<Word> wordsArray;
+    protected final ModelData data;
+    protected final ArrayList<Word> wordsArray;
 
-    public GameMenu(ReaderWriter udrw, Map<String, UserData> userData, String username, Map<String, String> words) {
-        this.udrw = udrw;
-        this.userData = userData;
-        this.username = username;
-
-        // convert words hashmap into an array of words
-        this.wordsArray = new ArrayList<Word>();
-        for (Map.Entry<String, String> temp : words.entrySet()) {
-            wordsArray.add(new Word(temp.getKey(), temp.getValue()));
-        }
+    public GameMenu(ModelData data) {
+        this.data = data;
+        this.wordsArray = data.words;
     }
 
     @Override
@@ -39,7 +30,6 @@ public class GameMenu extends Menu {
         String playAgain = "yes";
         int input = 0;
         HashSet<Word> incorrectWords = new HashSet<Word>();
-        UserData currentData = new UserData(0, 0, incorrectWords);
 
         while (input != 3) { // loops while player doesn't go back to main menu (press 3)
             System.out.println("\n\t\tGAME MENU:");
@@ -54,7 +44,6 @@ public class GameMenu extends Menu {
 
             // clears cached words from previus game
             incorrectWords.clear();
-            currentData = new UserData(0, 0, incorrectWords);
 
             switch (input) {
                 case (1):
@@ -67,22 +56,13 @@ public class GameMenu extends Menu {
                     while (playAgain.equals("yes")) { // for easy replayability 
                         incorrectWords.clear();
 
-                        // get user data from user database
-                        if (userData.containsKey(username)) {
-                            currentData = userData.get(username);
-                        } else {
-                            userData.put(username, currentData);
-                        }
-
-                        FlashCardGame game = new FlashCardGame(config, currentData, wordsArray);
+                        FlashCardGame game = new FlashCardGame(config, data.getUser(), wordsArray);
 
                         try {
-                            currentData = game.start();
+                            UserData updatedData = game.start();
+                            // userData.put(username, updatedData); // DB -- replace current users data with currentData
                         } catch (InterruptedException ex) {
                         }
-
-                        userData.put(username, currentData);
-                        udrw.writeTo(userData);
 
                         playAgain = InputGetter.getYesOrNo("Would you like to play again? (\"yes\" or \"no\")");
                     }
@@ -91,13 +71,7 @@ public class GameMenu extends Menu {
 
                     incorrectWords.clear();
 
-                    if (userData.containsKey(username)) {
-                        currentData = userData.get(username);
-                    } else {
-                        userData.put(username, currentData);
-                    }
-
-                    if (currentData.getIncorrectWords().isEmpty()) { // checks if user has incorrect words to revise
+                    if (data.getUser().getIncorrectWords().isEmpty()) { // checks if user has incorrect words to revise
                         System.out.println("Unable to revise: Revision pile empty!!");
                     } else {
                         System.out.println("Rules: Revision stops when you have correctly answered ALL your cards, or you press \'s\' to save progress.");
@@ -105,15 +79,13 @@ public class GameMenu extends Menu {
                         GameConfig reviseConfig = new GameConfig();
                         reviseConfig.getRevisionConfig();
 
-                        RevisionFlashCardGame game = new RevisionFlashCardGame(reviseConfig, currentData, currentData.getIncorrectWords());
+                        RevisionFlashCardGame game = new RevisionFlashCardGame(reviseConfig, data.getUser());
 
                         try {
-                            currentData = game.start();
+                            UserData updatedData = game.start();
+                            // userData.put(username, updatedData); // DB -- replace current users data with currentData
                         } catch (InterruptedException ex) {
                         }
-
-                        userData.put(username, currentData);
-                        udrw.writeTo(userData);
                     }
                     break;
                 case (3):

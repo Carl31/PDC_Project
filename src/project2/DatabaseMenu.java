@@ -16,19 +16,19 @@ import java.util.Set;
  *
  * @author carls
  */
-public class DatabaseMenu extends Menu {
+public class DatabaseMenu extends Menu { // Line 78!!!!!!
 
-    private final ReaderWriter wfrw;
+    private ModelData data;
     private Map<String, String> words;
 
-    public DatabaseMenu(ReaderWriter wfrw, Map<String, String> words) {
-        this.wfrw = wfrw;
-        this.words = words;
+    public DatabaseMenu(ModelData data) {
+        this.data = data;
     }
-
+    
     @Override
     public void run() {
         // initialising variables
+        
         int input = 0;
 
         System.out.println("\nWelcome to our word database!");
@@ -75,7 +75,7 @@ public class DatabaseMenu extends Menu {
                 default:
                     break;
             }
-            wfrw.writeTo(words);
+            //wfrw.writeTo(words); WRITE TO DB
             if (input != 4) {
                 input = 0;
             }

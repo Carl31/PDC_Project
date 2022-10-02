@@ -34,6 +34,7 @@ public class Database {
             conn = DriverManager.getConnection(url, dbusername, dbpassword);
             System.out.println(url + " connected...");
             Statement statement = conn.createStatement();
+            conn.setAutoCommit(false);
             String table = "";
 
             table = "UserData";
@@ -66,12 +67,13 @@ public class Database {
 
             if (rs.next()) { // i.e if user found in USERDATA table, update ModelData
                 String name = rs.getString("username");
-                System.out.println("Welcome back, " + name + "!");
+                System.out.println("Welcome back, " + username + "!");
 
                 // get user data ...
                 // get hashset of words from user_id to word_id table mappings
                 HashSet<Word> incorrectWords = getWords(Integer.parseInt(rs.getString("userId")));
                 data = new ModelData(username, new UserData(rs.getInt("gamesPlayed"), rs.getFloat("correctPercent"), incorrectWords));
+                rs.close();
 
             } else { // if user not found, then create new user using the input username
                 System.out.println("Creating new user: " + username);
@@ -87,6 +89,7 @@ public class Database {
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
+        data.setIsLoggedIn(true);
         return data;
     }
 
@@ -128,6 +131,7 @@ public class Database {
     public void closeConnections() {
         if (conn != null) {
             try {
+                conn.setAutoCommit(true);
                 conn.close();
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
@@ -141,21 +145,21 @@ public class Database {
         String spanish = "";
         String english = "";
         try {
-            Statement statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT wordId FROM UserWordMap WHERE userId = " + id + ""); // take away '
+            Statement statement1 = conn.createStatement();
+            ResultSet rs = statement1.executeQuery("SELECT wordId FROM UserWordMap WHERE userId = " + id + ""); // take away '
 
             ResultSet wordsRs = null;
+            Statement statement2 = conn.createStatement();
 
             while (rs.next()) { // get all user words
                 int wordId = Integer.parseInt(rs.getString("wordId"));
-                wordsRs = statement.executeQuery("SELECT spanish, english FROM WordData WHERE wordId = " + wordId + ""); // take away '
-
+                wordsRs = statement2.executeQuery("SELECT spanish, english FROM WordData WHERE wordId = " + wordId + ""); // take away '
+                wordsRs.next();
                 spanish = wordsRs.getString("spanish");
                 english = wordsRs.getString("english");
 
                 usersWords.add(new Word(spanish, english));
             }
-
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
