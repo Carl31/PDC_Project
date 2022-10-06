@@ -10,24 +10,12 @@ package project2;
 public class GameConfig {
     private int numCards;
     private String lang;
-    private String timed;
+    private boolean isRevision;
     
-    public GameConfig() {};
-    
-    /*
-    *  Used to instantiate a flash card game
-    */
-    public void getFlashConfig() {
-        numCards = InputGetter.getPosInt("Number of flash cards? (max 50)", 50);
-        lang = InputGetter.getLanguage("Flashcards language? (\"english\" or \"spanish\" or \"random\"): ");
-        timed = InputGetter.getYesOrNo("Time attack? (\"yes\" or \"no\") - Note - time attack does not save user points or data.");
-    }
-    
-    /*
-    *  Used for getting game config for a revision flash card game (no number of cards or time attack)
-    */
-    public void getRevisionConfig() {
-        lang = InputGetter.getLanguage("Flashcards language? (\"english\" or \"spanish\" or \"random\"): ");
+    public GameConfig(int numCards, String lang, boolean isRevision) {
+        this.numCards = numCards;
+        this.lang = lang;
+        this.isRevision = isRevision;
     }
 
     /**
@@ -38,6 +26,13 @@ public class GameConfig {
     }
 
     /**
+     * @param numCards the numCards to set
+     */
+    public void setNumCards(int numCards) {
+        this.numCards = numCards;
+    }
+
+    /**
      * @return the lang
      */
     public String getLang() {
@@ -45,16 +40,30 @@ public class GameConfig {
     }
 
     /**
-     * @return the timed
+     * @param lang the lang to set
      */
-    public String getTimed() {
-        return timed;
+    public void setLang(String lang) {
+        this.lang = lang;
+    }
+
+    /**
+     * @return the isRevision
+     */
+    public boolean isRevision() {
+        return isRevision;
+    }
+
+    /**
+     * @param isRevision the isRevision to set
+     */
+    public void setIsRevision(boolean isRevision) {
+        this.isRevision = isRevision;
     }
     
-    /*
-    *  Sets the number of cards in a game
-    */
-    public void setNumCards(int numCards) {
-        this.numCards = numCards;
-    }
+    
+    
+    
+    
+    
+    
 }

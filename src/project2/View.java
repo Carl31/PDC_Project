@@ -36,6 +36,23 @@ public class View extends JFrame implements Observer {
     protected javax.swing.JButton playBtn;
     protected javax.swing.JButton reviseBtn;
     
+    // PlayGameGUI Components
+    protected javax.swing.JLabel cardCountLabel;
+    protected javax.swing.JComboBox<String> cardLang;
+    protected javax.swing.JLabel cardWord;
+    protected javax.swing.JRadioButton isRevisionBtn;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JSeparator jSeparator1;
+    protected javax.swing.JTextField userAnswer;
+    protected javax.swing.JButton logoutBtn2;
+    protected javax.swing.JTextField numCards;
+    protected javax.swing.JButton startGameBtn;
+    
     public View() {
         // frame options
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -50,8 +67,14 @@ public class View extends JFrame implements Observer {
         data = (ModelData) arg;
         
         if (data.isLoggedIn()) {
-            this.getContentPane().removeAll();
-            initMainMenuComponents();
+            if (data.isPlaying()) {
+                this.getContentPane().removeAll();
+                initGameMenuComponents();
+            } else {
+                this.getContentPane().removeAll();
+                initMainMenuComponents();
+            }
+            
         }
         else {
             this.getContentPane().removeAll();
@@ -172,7 +195,7 @@ public class View extends JFrame implements Observer {
 
    
     protected void initMainMenuComponents() {
-         jPanel2 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
         backBtn = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         logoutBtn = new javax.swing.JButton();
@@ -278,11 +301,203 @@ public class View extends JFrame implements Observer {
         pack();
         
         this.logoutBtn.addActionListener(this.actionListener);
+        this.playBtn.addActionListener(this.actionListener);
+        
+        setVisible(true);
     }
     
 
     private void initGameMenuComponents() {
-        // paste respective GUI code here
+        jPanel6 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        logoutBtn2 = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel4 = new javax.swing.JLabel();
+        numCards = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        cardLang = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        cardWord = new javax.swing.JLabel();
+        cardCountLabel = new javax.swing.JLabel();
+        userAnswer = new javax.swing.JTextField();
+        startGameBtn = new javax.swing.JButton();
+        isRevisionBtn = new javax.swing.JRadioButton();
+
+        
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        
+        userAnswer.setEnabled(false);
+        cardWord.setEnabled(false);
+
+        jPanel6.setBackground(new java.awt.Color(102, 153, 0));
+        jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel7.setFont(new java.awt.Font("Lucida Sans Unicode", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(51, 255, 51));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("Game Config");
+        jLabel7.setBorder(new javax.swing.border.MatteBorder(null));
+        jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        logoutBtn2.setText("Log out");
+
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("Number of flash cards:");
+
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("Flash card language:");
+
+        cardLang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Spanish", "English", "Random" }));
+        cardLang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cardLangActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel2.setText("Type the translation of the word above:");
+
+        jPanel5.setBackground(new java.awt.Color(204, 204, 0));
+        jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        cardWord.setForeground(new java.awt.Color(0, 0, 0));
+        cardWord.setText("word");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addComponent(cardWord)
+                .addContainerGap(108, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(34, Short.MAX_VALUE)
+                .addComponent(cardWord)
+                .addGap(29, 29, 29))
+        );
+
+        cardCountLabel.setText("Card:");
+
+        userAnswer.setText("answer");
+        numCards.setText("10");
+
+        startGameBtn.setBackground(new java.awt.Color(153, 255, 0));
+        startGameBtn.setForeground(new java.awt.Color(0, 0, 0));
+        startGameBtn.setText("Start Game");
+        startGameBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startGameBtnActionPerformed(evt);
+            }
+        });
+
+        isRevisionBtn.setForeground(new java.awt.Color(0, 0, 0));
+        isRevisionBtn.setText("Revision");
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(logoutBtn2))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(51, 51, 51)
+                                .addComponent(jLabel4))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(73, 73, 73)
+                                .addComponent(numCards, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(157, 157, 157))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cardLang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1))
+                                .addGap(28, 28, 28)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel6Layout.createSequentialGroup()
+                                        .addComponent(isRevisionBtn)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(jPanel6Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(startGameBtn))))))
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel6Layout.createSequentialGroup()
+                            .addGap(34, 34, 34)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel6Layout.createSequentialGroup()
+                            .addGap(184, 184, 184)
+                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(cardCountLabel)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(userAnswer, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel2)))))))
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel1)
+                    .addComponent(isRevisionBtn))
+                .addGap(3, 3, 3)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(numCards, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cardLang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(startGameBtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardCountLabel)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(logoutBtn2))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(userAnswer, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 16, Short.MAX_VALUE))))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        //getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        pack();
+        
+        
+         this.logoutBtn2.addActionListener(this.actionListener);
+         this.startGameBtn.addActionListener(this.actionListener);
+         this.isRevisionBtn.addActionListener(this.actionListener);
+        
+        setVisible(true);
+                
     }
 
     private void initStatsMenuComponents() {
@@ -322,5 +537,26 @@ public class View extends JFrame implements Observer {
     
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {                                        
         // TODO add your handling code here:
+    }
+    
+    private void cardLangActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // TODO add your handling code here:
+    }    
+    
+    private void startGameBtnActionPerformed(java.awt.event.ActionEvent evt) {
+        if (!data.isCanStart()) {
+            JOptionPane.showMessageDialog(null, "Invalid input. Number of cards must be between 1-30 inclusive.");
+            numCards.setText("10");
+        } else {
+            // deactivate config options
+            numCards.setEnabled(false);
+            cardLang.setEnabled(false);
+            isRevisionBtn.setEnabled(false);
+            
+            userAnswer.setEnabled(true);
+            cardWord.setEnabled(true);
+        
+            JOptionPane.showMessageDialog(null, "GAME STARTING!");
+        }
     }
 }

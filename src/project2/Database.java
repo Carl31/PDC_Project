@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,13 +45,24 @@ public class Database {
 
             table = "WordData";
             if (!checkIfTableExists(table)) {
-                statement.executeUpdate("CREATE TABLE " + table + " (wordId INT, spanish VARCHAR(20), english VARCHAR(20))");
+                statement.executeUpdate("CREATE TABLE " + table + " (wordId INT, spanish VARCHAR(30), english VARCHAR(30))");
             }
 
             table = "UserWordMap";
             if (!checkIfTableExists(table)) {
                 statement.executeUpdate("CREATE TABLE " + table + " (userId INT, wordId INT)");
             }
+            
+            // update static db ints...
+            ResultSet rs = statement.executeQuery("SELECT COUNT(*) FROM WordData");
+            rs.next();
+            wordIdNum = rs.getInt(1);
+            
+            rs = statement.executeQuery("SELECT COUNT(*) FROM UserData");
+            rs.next();
+            userIdNum = rs.getInt(1);
+            
+            
             statement.close();
         } catch (Throwable e) {
             System.err.println(e);
@@ -167,7 +179,7 @@ public class Database {
         return usersWords;
     }
 
-    public void insertTestData() {
+    private void insertTestData() { // for testing purposes only
         try {
             Statement statement = conn.createStatement();
             statement.executeUpdate("INSERT INTO WordData VALUES(0, 'Hola', 'Hello')");
@@ -230,6 +242,50 @@ public class Database {
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
 
+    public ArrayList<Word> getWordsAsArray() {
+        ArrayList<Word> dbWords = new ArrayList<Word>();
+
+        String spanish = "";
+        String english = "";
+        try {
+            Statement statement1 = conn.createStatement();
+
+            for (int id = 0; id < wordIdNum; id++) {
+                ResultSet rs = statement1.executeQuery("SELECT spanish, english FROM WordData WHERE wordId = " + id + "");
+
+                while (rs.next()) { // get all words
+
+                    spanish = rs.getString("spanish");
+                    english = rs.getString("english");
+
+                    dbWords.add(new Word(spanish, english));
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return dbWords;
+    }
+    
+    public void insertWord(Word word) {
+        try {
+            Statement statement = conn.createStatement();
+
+                statement.executeUpdate("INSERT INTO WordData VALUES(" + wordIdNum + ", '" + word.getSpanish() + "', '" + word.getEnglish() + "')");
+                wordIdNum++;
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("Inserted: "+word.getSpanish()); // for testing
+    }
+    
+    public void insertWords(ArrayList<Word> words) {
+        for(Word word: words) {
+            insertWord(word);
+        }
     }
 }
