@@ -97,11 +97,10 @@ public class Model extends Observable {
     }
 
     protected void startGame() {
-
+        
         // initialising variables
         HashSet<Word> incorrectWords = new HashSet<Word>();
-
-        while (data.isCanStart()) { // loops while player doesn't go back to main menu
+        
             // clears cached words from previus game
             incorrectWords.clear();
 
@@ -126,9 +125,10 @@ public class Model extends Observable {
                     }
                 }
             }
-        }
 
         // TODO: put updatedData into db
+        data.setGameEnded(true);
+        notifyView();
     }
 
     private void generateCards() {
@@ -154,34 +154,57 @@ public class Model extends Observable {
         // init variables...
         generateCards();
         int prevScore = 0;
-        int cardsRemaining = configData.getNumCards();
+        int numCards = configData.getNumCards();
         final float score;
         List<Word> wrongWords = new ArrayList<Word>();
+        data.configEnabled = false;
+        data.displayCard = true;
+        data.setGameEnded(false);
+        data.isWaiting = true;
+        //data.cardsRemaining = (configData.getNumCards() + " / " + configData.getNumCards());
+        notifyView();
+        data.configEnabled = true;
 
         // start game
         for (Card c : cards) {
-            // print question
-            data.cardWord = c.getQuestion();
+            data.displayCard = true;
+            data.hasAnswered = false;
+            // update question
+            data.currentCard = c;
             // print card number for user // update cardCountLabel
-            data.cardsRemaining = ((configData.getNumCards() - cardsRemaining + 1) + "/" + configData.getNumCards());
+            data.cardsRemaining = ((configData.getNumCards() - numCards + 1) + " / " + configData.getNumCards());
             notifyView();
+            
+            data.hasAnswered = true;
+            data.displayCard = false;
 
             finalScore += c.checkAnswer(data.userAnswer);
+            
+            if (data.isGameEnded()) return;
+            
 
             // if incorrect, add incorrect word to users array of incorrect words (for revision)
-            if (finalScore <= prevScore && !data.getUser().getIncorrectWords().contains(c.getWord())) {
-                data.getUser().getIncorrectWords().add(c.getWord());
+            if (finalScore <= prevScore) {
+                if (!data.getUser().getIncorrectWords().contains(c.getWord())) {
+                    data.getUser().getIncorrectWords().add(c.getWord());
+                }
+                data.message = "Wrong! The correct answer is\n\t "+ data.currentCard.getAnswer().toUpperCase();
+            } else {
+                data.message = "Correct!";
             }
 
+            notifyView();
             prevScore = finalScore;
-            cardsRemaining--;
+            numCards--;
         }
 
+        if (data.isGameEnded()) return;
         // game ended ... save user data and print results
         score = ((float) finalScore / (float) configData.getNumCards()) * 100;
         data.getUser().addToCorrectPercent(score);
         data.getUser().incrementGamesPlayed();
         data.message = String.format("\nYou got: %.2f%%\nGo to the \'revision\' section to revise what you got wrong!", score);
+        data.displayCard = false;
         notifyView();
     }
 
@@ -196,7 +219,7 @@ public class Model extends Observable {
 
         // start game
         while (!cards.isEmpty()) {
-            data.cardWord = cards.peek().getQuestion();
+            data.currentCard = cards.peek();
             data.cardsRemaining = ("\t\tCards still in your revision pile: " + cards.size() + "\n");
 
             input = data.userAnswer;

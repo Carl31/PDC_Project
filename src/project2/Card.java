@@ -31,7 +31,7 @@ public class Card {
     *   Sets the question and answer based off the language given
     */
     private void initWord() {
-        switch (lang) {
+        switch (getLang()) {
             case ("english"):
                 answer = word.getSpanish();
                 question = word.getEnglish();
@@ -41,12 +41,14 @@ public class Card {
                 question = word.getSpanish();
                 break;
             default:
-                if ((int) Math.random() == 0) { // test if getting 50/50 chance
+                if ((int) Math.random() == 0) { // getting 50/50 chance - user chose 'random'
                     answer = word.getSpanish();
                     question = word.getEnglish();
+                    lang = "spanish";
                 } else {
                     answer = word.getEnglish();
                     question = word.getSpanish();
+                    lang = "english";
                 }
         }
     }
@@ -59,10 +61,6 @@ public class Card {
         //Check the answer based on the absolute value of the difference between uAnswer and cAnswer. 
         if (answer.equals(uAnswer)) {
             reward = 1;
-            System.out.println("Correct!");
-        } else {
-            System.out.println("Wrong!");
-            System.out.println("Correct answer was: " + answer);
         }
         return reward;
     }
@@ -80,6 +78,14 @@ public class Card {
     public String getQuestion() {
         return question;
     }
+
+    /**
+     * @return the lang
+     */
+    public String getLang() {
+        return lang;
+    }
+    
     
     
 }

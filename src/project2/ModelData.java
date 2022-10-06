@@ -13,14 +13,18 @@ public class ModelData {
     private UserData user;
     private String username;
     private boolean isLoggedIn;
-    private boolean isPlaying;
-    private boolean canStart;
-    protected ArrayList<Word> words;
-    private boolean gameEnded;
-    protected String message;
+    private boolean isPlaying; // when user is in play mode
+    private boolean canStart; // when all game config options are entered as valid
+    protected ArrayList<Word> words; // all word data from db
+    private boolean gameEnded; // if game is over
+    protected String message; // message to be printed to screen
     protected String cardsRemaining;
     protected String userAnswer;
-    protected String cardWord;
+    protected Card currentCard;
+    protected boolean isWaiting; // if waiting for user to enter their answer
+    protected boolean configEnabled; // controls which buttons/components should be set to disabled/enabled
+    protected boolean displayCard; // if view needs to show new card
+    protected boolean hasAnswered; // if user has given their answer
     
     public ModelData() {
         this.user = null;
@@ -33,7 +37,11 @@ public class ModelData {
         this.message = "";
         this.cardsRemaining = "";
         this.userAnswer = "";
-        this.cardWord = "";
+        this.currentCard = null;
+        this.isWaiting = false;
+        this.configEnabled = true;
+        this.displayCard = true;
+        this.hasAnswered = false;
     }
     
     public ModelData(String username, UserData user) {

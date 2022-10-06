@@ -43,14 +43,19 @@ public class Controller implements ActionListener {
             model.exitGame();
         } else if (actionCommand.equals(view.playBtn.getActionCommand())) {
             model.data.setIsPlaying(true);
+            model.data.setGameEnded(false);
+            model.data.isWaiting = false;
             model.notifyView();
         } else if (actionCommand.equals(view.startGameBtn.getActionCommand())) {
-            int cards = Integer.parseInt(view.numCards.getText());
-            if (cards >= 1 && cards <= 30) {
-                view.data.setCanStart(true);
-                model.configData = new GameConfig(Integer.valueOf(view.numCards.getText()), (String)view.cardLang.getSelectedItem(), view.isRevisionBtn.isSelected());
-                model.startGame();
+            while (view.data.isPlaying()) {
+                int cards = Integer.parseInt(view.numCards.getText());
+                if (cards >= 1 && cards <= 30) {
+                    view.data.setCanStart(true);
+                    model.configData = new GameConfig(Integer.valueOf(view.numCards.getText()), (String) view.cardLang.getSelectedItem(), view.isRevisionBtn.isSelected());
+                    model.startGame();
+                }
             }
+            model.notifyView();
         }
     }
 }
