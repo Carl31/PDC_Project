@@ -59,7 +59,7 @@ public class Card {
     public int checkAnswer(String uAnswer) {
         int reward = 0;
         //Check the answer based on the absolute value of the difference between uAnswer and cAnswer. 
-        if (answer.equals(uAnswer)) {
+        if (answer.equalsIgnoreCase(uAnswer)) {
             reward = 1;
         }
         return reward;

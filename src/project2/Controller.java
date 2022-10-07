@@ -41,7 +41,7 @@ public class Controller implements ActionListener {
         } else if (actionCommand.equals(view.exitBtn.getActionCommand())) {
             // upon exit
             model.exitGame();
-        } else if (actionCommand.equals(view.playBtn.getActionCommand())) {
+        } else if (actionCommand.equals(view.toPlayBtn.getActionCommand())) {
             model.data.setIsPlaying(true);
             model.data.setGameEnded(false);
             model.data.isWaiting = false;

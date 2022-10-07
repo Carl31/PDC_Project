@@ -29,12 +29,12 @@ public class View extends JFrame implements Observer {
     private javax.swing.JLabel usernameLabel;
 
     // MainMenuGUI Components
-    protected javax.swing.JButton backBtn;
+    protected javax.swing.JButton tosStatsBtn;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel2;
     protected javax.swing.JButton logoutBtn;
-    protected javax.swing.JButton playBtn;
-    protected javax.swing.JButton reviseBtn;
+    protected javax.swing.JButton toPlayBtn;
+    protected javax.swing.JButton toDatabaseBtn;
 
     // PlayGameGUI Components
     protected javax.swing.JLabel cardCountLabel;
@@ -64,14 +64,20 @@ public class View extends JFrame implements Observer {
     public void update(Observable o, Object arg) {
         data = (ModelData) arg;
 
-        if (data.isLoggedIn()) {
-            if (data.isPlaying()) {
-                if (data.isGameEnded()) {
-                    if (JOptionPane.showConfirmDialog(null, "Do you want to play again?", "QUESTION",
-                            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                    } else {
+        if (data.isLoggedIn()) { // if player is logged in
+            if (data.isPlaying()) { // if player is in the play/game menu
+                if (data.isGameEnded()) { // if current game has ended
+                    if (isRevisionBtn.isSelected()) { // if current game is a revision game
                         data.setIsPlaying(false);
+                    } else {
+                        if (JOptionPane.showConfirmDialog(null, "Do you want to play again?", "QUESTION",
+                                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                        } else {
+                            data.setIsPlaying(false);
+                        }
                     }
+                } else if (data.displayWarning) {
+                    JOptionPane.showMessageDialog(null, data.message);
                 } else {
                     if (data.isWaiting) {
                         if (data.configEnabled == false) {
@@ -92,7 +98,9 @@ public class View extends JFrame implements Observer {
                                 } while (data.userAnswer == null && data.isPlaying() == true);
                             }
 
-                            if (data.hasAnswered) JOptionPane.showMessageDialog(null, data.message);
+                            if (data.hasAnswered) {
+                                JOptionPane.showMessageDialog(null, data.message);
+                            }
 
                         }
                     } else {
@@ -224,18 +232,18 @@ public class View extends JFrame implements Observer {
 
     protected void initMainMenuComponents() {
         jPanel2 = new javax.swing.JPanel();
-        backBtn = new javax.swing.JButton();
+        tosStatsBtn = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         logoutBtn = new javax.swing.JButton();
-        reviseBtn = new javax.swing.JButton();
-        playBtn = new javax.swing.JButton();
+        toDatabaseBtn = new javax.swing.JButton();
+        toPlayBtn = new javax.swing.JButton();
 
         //setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         jPanel2.setBackground(new java.awt.Color(102, 153, 0));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        backBtn.setText("BACK");
-        backBtn.addActionListener(new java.awt.event.ActionListener() {
+        tosStatsBtn.setText("STATS");
+        tosStatsBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backBtnActionPerformed(evt);
             }
@@ -255,15 +263,15 @@ public class View extends JFrame implements Observer {
             }
         });
 
-        reviseBtn.setText("REVISE");
-        reviseBtn.addActionListener(new java.awt.event.ActionListener() {
+        toDatabaseBtn.setText("DATA BASE");
+        toDatabaseBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 reviseBtnActionPerformed(evt);
             }
         });
 
-        playBtn.setText("PLAY");
-        playBtn.addActionListener(new java.awt.event.ActionListener() {
+        toPlayBtn.setText("PLAY");
+        toPlayBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 playBtnActionPerformed(evt);
             }
@@ -271,8 +279,7 @@ public class View extends JFrame implements Observer {
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jPanel2Layout.setHorizontalGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(logoutBtn))
@@ -282,18 +289,17 @@ public class View extends JFrame implements Observer {
                                 .addContainerGap(214, Short.MAX_VALUE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(reviseBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(toDatabaseBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tosStatsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(136, 136, 136))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addGap(120, 120, 120)
-                                        .addComponent(playBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(toPlayBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addContainerGap(380, Short.MAX_VALUE)))
         );
-        jPanel2Layout.setVerticalGroup(
-                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jPanel2Layout.setVerticalGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel2Layout.createSequentialGroup()
@@ -303,14 +309,14 @@ public class View extends JFrame implements Observer {
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                                 .addContainerGap(162, Short.MAX_VALUE)
                                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(reviseBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(toDatabaseBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(tosStatsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addGap(43, 43, 43)))
                                 .addComponent(logoutBtn))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                         .addContainerGap(164, Short.MAX_VALUE)
-                                        .addComponent(playBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(toPlayBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(70, 70, 70)))
         );
 
@@ -328,7 +334,7 @@ public class View extends JFrame implements Observer {
         pack();
 
         this.logoutBtn.addActionListener(this.actionListener);
-        this.playBtn.addActionListener(this.actionListener);
+        this.toPlayBtn.addActionListener(this.actionListener);
 
         setVisible(true);
     }
@@ -460,7 +466,7 @@ public class View extends JFrame implements Observer {
                                                         .addGroup(jPanel6Layout.createSequentialGroup()
                                                                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addGap(59, 59, 59))
-                                                        ))))
+                                                ))))
                         .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
@@ -490,7 +496,6 @@ public class View extends JFrame implements Observer {
                                                 .addGap(0, 0, Short.MAX_VALUE)
                                                 .addComponent(logoutBtn2))
                                         .addGroup(jPanel6Layout.createSequentialGroup()
-                                               
                                                 .addGap(0, 24, Short.MAX_VALUE))))
         );
 

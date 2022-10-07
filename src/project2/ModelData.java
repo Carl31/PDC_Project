@@ -25,6 +25,7 @@ public class ModelData {
     protected boolean configEnabled; // controls which buttons/components should be set to disabled/enabled
     protected boolean displayCard; // if view needs to show new card
     protected boolean hasAnswered; // if user has given their answer
+    protected boolean displayWarning; // for displaying a message before a game has started
     
     public ModelData() {
         this.user = null;
@@ -42,6 +43,7 @@ public class ModelData {
         this.configEnabled = true;
         this.displayCard = true;
         this.hasAnswered = false;
+        this.displayWarning = false;
     }
     
     public ModelData(String username, UserData user) {

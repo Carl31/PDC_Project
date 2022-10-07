@@ -52,17 +52,16 @@ public class Database {
             if (!checkIfTableExists(table)) {
                 statement.executeUpdate("CREATE TABLE " + table + " (userId INT, wordId INT)");
             }
-            
+
             // update static db ints...
             ResultSet rs = statement.executeQuery("SELECT COUNT(*) FROM WordData");
             rs.next();
             wordIdNum = rs.getInt(1);
-            
+
             rs = statement.executeQuery("SELECT COUNT(*) FROM UserData");
             rs.next();
             userIdNum = rs.getInt(1);
-            
-            
+
             statement.close();
         } catch (Throwable e) {
             System.err.println(e);
@@ -132,8 +131,8 @@ public class Database {
         try {
             statement = conn.createStatement();
             statement.executeUpdate("UPDATE UserData SET gamesPlayed=" + data.getGamesPlayed() + " WHERE username='" + username + "'");
-            statement.executeUpdate("UPDATE UserData SET correctPecent=" + data.getCorrectPercent() + " WHERE username='" + username + "'");
-            // TODO: update users incorrectWords (update user_id to word_id mapping table)
+            statement.executeUpdate("UPDATE UserData SET correctPercent=" + data.getCorrectPercent() + " WHERE username='" + username + "'");
+            // update users incorrectWords (update user_id to word_id mapping table) ...
             updateMappingTable(username, incorrectWords);
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
@@ -204,8 +203,9 @@ public class Database {
             if (rs.next()) { // i.e if user found in USERDATA table, get users incorrect words
                 userId = rs.getString("userId");
 
-                // get hashset of words from user_id to word_id table mappings
-                incorrectWords = getWords(Integer.parseInt(userId));
+                // get hashset of words from user_id to word_id table mappings - removed below line to comply with game functionality
+                // incorrectWords = getWords(Integer.parseInt(userId));
+                clearUsersWords(userId);
 
             } else { // if user not found, then create new user using the input username
                 throw new SQLException("User not found.");
@@ -270,21 +270,32 @@ public class Database {
 
         return dbWords;
     }
-    
+
+    private void clearUsersWords(String userId) {
+        try {
+            Statement statement = conn.createStatement();
+            // add userId-wordId table entry
+            statement.executeUpdate("DELETE FROM USERWORDMAP WHERE UserId = " + userId);
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void insertWord(Word word) {
         try {
             Statement statement = conn.createStatement();
 
-                statement.executeUpdate("INSERT INTO WordData VALUES(" + wordIdNum + ", '" + word.getSpanish() + "', '" + word.getEnglish() + "')");
-                wordIdNum++;
+            statement.executeUpdate("INSERT INTO WordData VALUES(" + wordIdNum + ", '" + word.getSpanish() + "', '" + word.getEnglish() + "')");
+            wordIdNum++;
         } catch (SQLException ex) {
-            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Database.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("Inserted: "+word.getSpanish()); // for testing
+        System.out.println("Inserted: " + word.getSpanish()); // for testing
     }
-    
+
     public void insertWords(ArrayList<Word> words) {
-        for(Word word: words) {
+        for (Word word : words) {
             insertWord(word);
         }
     }
