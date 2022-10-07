@@ -34,7 +34,7 @@ public class Controller implements ActionListener {
                 }
             }
 
-        } else if (actionCommand.equals(view.logoutBtn.getActionCommand())) {
+        } else if (actionCommand.equals(view.logoutBtn.getActionCommand()) || actionCommand.equals(view.logoutBtn.getActionCommand())) {
             // upon logout
             model.logout();
             model.notifyView();
@@ -45,6 +45,14 @@ public class Controller implements ActionListener {
             model.data.setIsPlaying(true);
             model.data.setGameEnded(false);
             model.data.isWaiting = false;
+            model.notifyView();
+        } else if (actionCommand.equals(view.toDatabaseBtn.getActionCommand())) {
+            model.data.isInDb = true;
+            model.data.setIsPlaying(false);
+            model.notifyView();
+        } else if (actionCommand.equals(view.backBtn3.getActionCommand()) || actionCommand.equals(view.backBtn2.getActionCommand())) {
+            model.data.isInDb = false;
+            model.data.setIsPlaying(false);
             model.notifyView();
         } else if (actionCommand.equals(view.startGameBtn.getActionCommand())) {
             while (view.data.isPlaying()) {

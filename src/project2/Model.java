@@ -62,6 +62,7 @@ public class Model extends Observable {
         this.data.setUser(null);
         this.data.setIsLoggedIn(false);
         this.data.setIsPlaying(false);
+        this.data.isInDb = false;
     }
 
     public void notifyView() {

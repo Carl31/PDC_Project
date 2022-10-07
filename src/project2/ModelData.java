@@ -26,6 +26,7 @@ public class ModelData {
     protected boolean displayCard; // if view needs to show new card
     protected boolean hasAnswered; // if user has given their answer
     protected boolean displayWarning; // for displaying a message before a game has started
+    protected boolean isInDb; // if user is in database menu
     
     public ModelData() {
         this.user = null;
@@ -44,6 +45,7 @@ public class ModelData {
         this.displayCard = true;
         this.hasAnswered = false;
         this.displayWarning = false;
+        this.isInDb = false;
     }
     
     public ModelData(String username, UserData user) {
