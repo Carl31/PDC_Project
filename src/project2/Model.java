@@ -153,6 +153,7 @@ public class Model extends Observable {
     public void startFlashCardGame() throws InterruptedException {
         // init variables...
         generateCards();
+        finalScore = 0;
         int prevScore = 0;
         int numCards = configData.getNumCards();
         final float score;

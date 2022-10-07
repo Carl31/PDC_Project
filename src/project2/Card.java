@@ -32,23 +32,23 @@ public class Card {
     */
     private void initWord() {
         switch (getLang()) {
-            case ("english"):
+            case ("Spanish"):
                 answer = word.getSpanish();
                 question = word.getEnglish();
                 break;
-            case ("spanish"):
+            case ("English"):
                 answer = word.getEnglish();
                 question = word.getSpanish();
                 break;
             default:
-                if ((int) Math.random() == 0) { // getting 50/50 chance - user chose 'random'
+                if (Math.random() < 0.5f) { // getting 50/50 chance - user chose 'random'
                     answer = word.getSpanish();
                     question = word.getEnglish();
-                    lang = "spanish";
+                    lang = "Spanish";
                 } else {
                     answer = word.getEnglish();
                     question = word.getSpanish();
-                    lang = "english";
+                    lang = "English";
                 }
         }
     }

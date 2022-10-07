@@ -42,17 +42,14 @@ public class View extends JFrame implements Observer {
     protected javax.swing.JLabel cardWord;
     protected javax.swing.JRadioButton isRevisionBtn;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JSeparator jSeparator1;
-    protected javax.swing.JTextField userAnswer;
     protected javax.swing.JButton logoutBtn2;
     protected javax.swing.JTextField numCards;
     protected javax.swing.JButton startGameBtn;
-    private javax.swing.JButton submitBtn;
 
     public View() {
         // frame options
@@ -345,18 +342,14 @@ public class View extends JFrame implements Observer {
         numCards = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         cardLang = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         cardWord = new javax.swing.JLabel();
         cardCountLabel = new javax.swing.JLabel();
-        userAnswer = new javax.swing.JTextField();
         startGameBtn = new javax.swing.JButton();
         isRevisionBtn = new javax.swing.JRadioButton();
-        submitBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        userAnswer.setEnabled(false);
         cardWord.setEnabled(false);
 
         jPanel6.setBackground(new java.awt.Color(102, 153, 0));
@@ -371,9 +364,6 @@ public class View extends JFrame implements Observer {
 
         logoutBtn2.setText("Log out");
 
-        submitBtn.setText("submit");
-        submitBtn.setEnabled(false);
-
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Number of flash cards:");
 
@@ -386,9 +376,6 @@ public class View extends JFrame implements Observer {
                 cardLangActionPerformed(evt);
             }
         });
-
-        jLabel2.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel2.setText("Type the translation of the word above:");
 
         jPanel5.setBackground(new java.awt.Color(204, 204, 0));
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -415,7 +402,6 @@ public class View extends JFrame implements Observer {
 
         cardCountLabel.setText("Card:");
 
-        userAnswer.setText("answer");
         numCards.setText("10");
 
         startGameBtn.setBackground(new java.awt.Color(153, 255, 0));
@@ -424,12 +410,6 @@ public class View extends JFrame implements Observer {
         startGameBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 startGameBtnActionPerformed(evt);
-            }
-        });
-
-        submitBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                submitBtnActionPerformed(evt);
             }
         });
 
@@ -480,12 +460,7 @@ public class View extends JFrame implements Observer {
                                                         .addGroup(jPanel6Layout.createSequentialGroup()
                                                                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addGap(59, 59, 59))
-                                                        .addGroup(jPanel6Layout.createSequentialGroup()
-                                                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                                        .addComponent(userAnswer, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                        .addComponent(jLabel2))
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(submitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                                        ))))
                         .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
@@ -510,15 +485,12 @@ public class View extends JFrame implements Observer {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cardCountLabel)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel2)
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel6Layout.createSequentialGroup()
                                                 .addGap(0, 0, Short.MAX_VALUE)
                                                 .addComponent(logoutBtn2))
                                         .addGroup(jPanel6Layout.createSequentialGroup()
-                                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addComponent(userAnswer, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(submitBtn))
+                                               
                                                 .addGap(0, 24, Short.MAX_VALUE))))
         );
 
@@ -602,10 +574,7 @@ public class View extends JFrame implements Observer {
         cardLang.setEnabled(false);
         isRevisionBtn.setEnabled(false);
         startGameBtn.setEnabled(false);
-
-        userAnswer.setEnabled(true);
         cardWord.setEnabled(true);
-        submitBtn.setEnabled(true);
     }
 
     private void updateCard() {
