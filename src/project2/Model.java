@@ -21,8 +21,6 @@ import java.util.concurrent.TimeUnit;
 public class Model extends Observable {
 
     public ModelData data;
-    private DatabaseMenu dbMenu;
-    private StatsMenu statsMenu;
     protected Database db;
     protected GameConfig configData;
     private ArrayList<Word> wordData;
@@ -38,8 +36,6 @@ public class Model extends Observable {
 
         data = new ModelData();
         configData = null;
-        dbMenu = new DatabaseMenu(data);
-        statsMenu = new StatsMenu(data);
         cards = new LinkedList<Card>();
     }
 

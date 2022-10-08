@@ -48,6 +48,9 @@ public class StatsGUI extends javax.swing.JFrame {
 
         logoutBtn4.setText("Log out");
 
+        jList2.setBackground(new java.awt.Color(153, 153, 0));
+        jList2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jList2.setForeground(new java.awt.Color(255, 255, 255));
         jList2.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }

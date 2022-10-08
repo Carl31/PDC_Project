@@ -69,7 +69,7 @@ public class View extends JFrame implements Observer {
     protected javax.swing.JTextField newEnglishWord;
     protected javax.swing.JTextField newSpanishWord;
     protected javax.swing.JRadioButton orderInSpanishBtn;
-    protected DefaultListModel<String> model;
+    protected DefaultListModel<String> dbModel;
     protected javax.swing.JButton removeWordBtn;
     protected String lastSelectedItem = "";
     
@@ -80,6 +80,7 @@ public class View extends JFrame implements Observer {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane2;
     protected javax.swing.JButton logoutBtn4;
+    protected DefaultListModel<String> statsModel;
 
     public View() {
         // frame options
@@ -141,7 +142,7 @@ public class View extends JFrame implements Observer {
 
             } else if (data.isInDb) {
                 if (data.listUpdated) {
-                    updateList();
+                    updateWordsList();
                 } else {
                     this.getContentPane().removeAll();
                     initDatabaseMenuComponents();
@@ -171,10 +172,14 @@ public class View extends JFrame implements Observer {
         backBtn3 = new javax.swing.JButton();
         backBtn2 = new javax.swing.JButton();
 
+        // dependencies
         logoutBtn3 = new javax.swing.JButton();
         logoutBtn2 = new javax.swing.JButton();
         logoutBtn4 = new javax.swing.JButton();
         backBtn1 = new javax.swing.JButton();
+        orderInSpanishBtn = new javax.swing.JRadioButton();
+        addWordBtn = new javax.swing.JButton();
+        removeWordBtn = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(102, 153, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -572,6 +577,7 @@ public class View extends JFrame implements Observer {
         jScrollPane2 = new javax.swing.JScrollPane();
         jList2 = new javax.swing.JList<>();
         backBtn1 = new javax.swing.JButton();
+        statsModel = new DefaultListModel<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -591,13 +597,13 @@ public class View extends JFrame implements Observer {
                 logoutBtnActionPerformed(evt);
             }
         });
-
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        
         jScrollPane2.setViewportView(jList2);
+        jList2.setBackground(new java.awt.Color(153, 153, 0));
+        jList2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jList2.setForeground(new java.awt.Color(255, 255, 255));
+        
+        updateStats();
 
         backBtn1.setText("Back");
         backBtn1.addActionListener(new java.awt.event.ActionListener() {
@@ -665,7 +671,7 @@ public class View extends JFrame implements Observer {
         logoutBtn3 = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        model = new DefaultListModel<>();
+        dbModel = new DefaultListModel<>();
         orderInSpanishBtn = new javax.swing.JRadioButton();
         newEnglishWord = new javax.swing.JTextField();
         newSpanishWord = new javax.swing.JTextField();
@@ -676,17 +682,14 @@ public class View extends JFrame implements Observer {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        model.clear();
+        dbModel.clear();
         int currentNum = 1;
         for (Word word : data.words) {
-            model.addElement(currentNum + ") " + word.getEnglish() + " - " + word.getSpanish());
+            dbModel.addElement(currentNum + ") " + word.getEnglish() + " - " + word.getSpanish());
             currentNum++;
         }
 
-        jList1 = new javax.swing.JList<String>(model);
-        jList1.addListSelectionListener((ListSelectionEvent e) -> {
-            System.out.println("LIST: "+jList1.getSelectedValue());
-        });
+        jList1 = new javax.swing.JList<String>(dbModel);
 
         jPanel7.setBackground(new java.awt.Color(102, 153, 0));
         jPanel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -933,21 +936,43 @@ public class View extends JFrame implements Observer {
         //JOptionPane.showMessageDialog(null, data.currentCard.getQuestion()); // for testing
     }
 
-    private void updateList() {
+    private void updateWordsList() {
         int currentNum = 1;
-        model.clear();
+        dbModel.clear();
         if (orderInSpanishBtn.isSelected()) {
             for (Word word : data.words) {
-                model.addElement(currentNum + ") " + word.getSpanish() + " - " + word.getEnglish());
+                dbModel.addElement(currentNum + ") " + word.getSpanish() + " - " + word.getEnglish());
                 currentNum++;
             }
         } else {
             for (Word word : data.words) {
-                model.addElement(currentNum + ") " + word.getEnglish() + " - " + word.getSpanish());
+                dbModel.addElement(currentNum + ") " + word.getEnglish() + " - " + word.getSpanish());
                 currentNum++;
             }
         }
 
-        jList1.setModel(model);
+        jList1.setModel(dbModel);
+    }
+    
+    protected void updateStats() {
+        statsModel.clear();
+        
+        statsModel.addElement("NAME: " + data.getUsername());
+        statsModel.addElement("Total rounds played: " + data.getUser().getGamesPlayed());
+        statsModel.addElement("Correct Percentage: " + data.getUser().getCorrectPercent() + "%");
+        statsModel.addElement("Incorrect words:");
+        statsModel.addElement("-------------------------------------------------");
+        
+        if (data.getUser().getIncorrectWords().isEmpty()) {
+            statsModel.addElement("Revision pile empty!!");
+        } else {
+            int count = 1;
+            for (Word temp : data.getUser().getIncorrectWords()) {
+                statsModel.addElement(count + ") " + temp.getSpanish() + " : " + temp.getEnglish());
+                count++;
+            }
+        }
+        
+        jList2.setModel(statsModel);
     }
 }
