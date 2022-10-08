@@ -5,6 +5,9 @@
  */
 package project2;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -46,6 +49,8 @@ public class Database {
             table = "WordData";
             if (!checkIfTableExists(table)) {
                 statement.executeUpdate("CREATE TABLE " + table + " (wordId INT, spanish VARCHAR(30), english VARCHAR(30))");
+                // inject word data into db
+                inject();
             }
 
             table = "UserWordMap";
@@ -337,5 +342,47 @@ public class Database {
         }
 
         return isPresent;
+    }
+    
+    private void inject() {
+        try {
+
+            // Passing the path to the file as a parameter
+            FileReader fr = new FileReader("words.txt");
+
+            // Declaring loop variable
+            int i;
+
+            char temp;
+            String spanish = "";
+            String english = "";
+            String line = "";
+
+            // Holds true till there is nothing to read
+            while ((i = fr.read()) != -1) // Print all the content of a file
+            {
+                temp = (char) i;
+
+                switch (temp) {
+                    case (':'):
+                        spanish = line;
+                        line = "";
+                        break;
+                    case ('\n'):
+                        english = line;
+                        line = "";
+                        insertWord(new Word(spanish, english));
+                        break;
+                    default:
+                        line += temp;
+                        break;
+                }
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
+        } catch (IOException e) {
+            System.out.println("Error reading from file.");
+        }
     }
 }

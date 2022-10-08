@@ -22,7 +22,7 @@ public class Model extends Observable {
 
     public ModelData data;
     protected Database db;
-    protected GameConfig configData;
+    private GameConfig configData;
     private ArrayList<Word> wordData;
 
     private Queue<Card> cards;
@@ -126,21 +126,21 @@ public class Model extends Observable {
         notifyView();
     }
 
-    private void generateCards() {
-        cards.clear();
+    public void generateCards() {
+        getCards().clear();
         Word newWord = null;
         HashSet<Word> generatedWords = new HashSet<Word>(); // set of already-generated words (to avoid duplicates)
         Random rand = new Random();
         int index = 0;
 
-        for (int i = 0; i < configData.getNumCards(); i++) {
-            index = rand.nextInt(wordData.size());
-            newWord = wordData.get(index);
+        for (int i = 0; i < getConfigData().getNumCards(); i++) {
+            index = rand.nextInt(getWordData().size());
+            newWord = getWordData().get(index);
             if (generatedWords.contains(newWord)) {
                 i--;
             } else {
                 generatedWords.add(newWord);
-                cards.add(new Card(configData.getLang(), newWord));
+                getCards().add(new Card(getConfigData().getLang(), newWord));
             }
         }
     }
@@ -150,7 +150,7 @@ public class Model extends Observable {
         generateCards();
         finalScore = 0;
         int prevScore = 0;
-        int numCards = configData.getNumCards();
+        int numCards = getConfigData().getNumCards();
         final float score;
         data.configEnabled = false;
         data.displayCard = true;
@@ -161,13 +161,13 @@ public class Model extends Observable {
         data.configEnabled = true;
 
         // start game
-        for (Card c : cards) {
+        for (Card c : getCards()) {
             data.displayCard = true;
             data.hasAnswered = false;
             // update question
             data.currentCard = c;
             // print card number for user // update cardCountLabel
-            data.cardsRemaining = ((configData.getNumCards() - numCards + 1) + " / " + configData.getNumCards());
+            data.cardsRemaining = ((getConfigData().getNumCards() - numCards + 1) + " / " + getConfigData().getNumCards());
             notifyView();
 
             data.hasAnswered = true;
@@ -199,7 +199,7 @@ public class Model extends Observable {
             return;
         }
         // game ended ... save user data and print results
-        score = ((float) finalScore / (float) configData.getNumCards()) * 100;
+        score = ((float) finalScore / (float) getConfigData().getNumCards()) * 100;
         data.getUser().addToCorrectPercent(score);
         data.getUser().incrementGamesPlayed();
         data.message = String.format("\nYou got: %.2f%%\nGo to the \'revision\' section to revise what you got wrong!", score);
@@ -220,7 +220,7 @@ public class Model extends Observable {
         data.setGameEnded(false);
         data.setIsPlaying(true);
         data.isWaiting = true;
-        data.cardsRemaining = (configData.getNumCards() + " / " + configData.getNumCards());
+        data.cardsRemaining = (getConfigData().getNumCards() + " / " + getConfigData().getNumCards());
         notifyView();
         data.configEnabled = true;
 
@@ -232,15 +232,15 @@ public class Model extends Observable {
             data.hasAnswered = false;
 
             // update question
-            data.currentCard = cards.peek();
+            data.currentCard = getCards().peek();
             // print card number for user // update cardCountLabel
-            data.cardsRemaining = ("\t\tCards still in your revision pile: " + cards.size() + "\n");
+            data.cardsRemaining = ("\t\tCards still in your revision pile: " + getCards().size() + "\n");
             notifyView();
 
             data.hasAnswered = true;
             data.displayCard = false;
 
-            finalScore += cards.peek().checkAnswer(data.userAnswer);
+            finalScore += getCards().peek().checkAnswer(data.userAnswer);
 
             if (data.isGameEnded()) {
                 return;
@@ -248,10 +248,10 @@ public class Model extends Observable {
 
             // if incorrect, add card to back of queue
             if (finalScore <= prevScore) {
-                cards.add(cards.remove());
+                getCards().add(getCards().remove());
                 data.message = "Wrong! The correct answer is\n\t " + data.currentCard.getAnswer().toUpperCase();
             } else { // if correct, remove card from queue
-                cards.remove();
+                getCards().remove();
                 total++;
                 data.message = "Correct!";
             }
@@ -262,7 +262,7 @@ public class Model extends Observable {
 
         // game ended ... save user data and print results
         data.getUser().getIncorrectWords().clear();
-        for (Card tempCard : cards) {
+        for (Card tempCard : getCards()) {
             data.getUser().getIncorrectWords().add(tempCard.getWord());
         }
         data.displayCard = false;
@@ -272,9 +272,9 @@ public class Model extends Observable {
     }
 
     private void generateUserCards() {
-        cards.clear();
+        getCards().clear();
         for (Word temp : data.getUser().getIncorrectWords()) {
-            cards.add(new Card(configData.getLang(), temp));
+            getCards().add(new Card(getConfigData().getLang(), temp));
         }
     }
 
@@ -325,5 +325,49 @@ public class Model extends Observable {
     private boolean isAlphanumeric(String word) {
         return (word.matches("[a-zA-Z\u00f1]*"));
     }
+
+    /**
+     * @return the configData
+     */
+    public GameConfig getConfigData() {
+        return configData;
+    }
+
+    /**
+     * @param configData the configData to set
+     */
+    public void setConfigData(GameConfig configData) {
+        this.configData = configData;
+    }
+
+    /**
+     * @return the wordData
+     */
+    public ArrayList<Word> getWordData() {
+        return wordData;
+    }
+
+    /**
+     * @param wordData the wordData to set
+     */
+    public void setWordData(ArrayList<Word> wordData) {
+        this.wordData = wordData;
+    }
+
+    /**
+     * @return the cards
+     */
+    public Queue<Card> getCards() {
+        return cards;
+    }
+
+    /**
+     * @param cards the cards to set
+     */
+    public void setCards(Queue<Card> cards) {
+        this.cards = cards;
+    }
+    
+    
 
 }

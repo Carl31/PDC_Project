@@ -82,7 +82,7 @@ public class Controller implements ActionListener {
                 int cards = Integer.parseInt(view.numCards.getText());
                 if (cards >= 1 && cards <= 30) {
                     view.data.setCanStart(true);
-                    model.configData = new GameConfig(Integer.valueOf(view.numCards.getText()), (String) view.cardLang.getSelectedItem(), view.isRevisionBtn.isSelected());
+                    model.setConfigData(new GameConfig(Integer.valueOf(view.numCards.getText()), (String) view.cardLang.getSelectedItem(), view.isRevisionBtn.isSelected()));
                     model.startGame();
                 }
             }
