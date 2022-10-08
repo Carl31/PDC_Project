@@ -6,10 +6,14 @@
 package project2;
 
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
 
 /**
  *
@@ -51,7 +55,7 @@ public class View extends JFrame implements Observer {
     protected javax.swing.JTextField numCards;
     protected javax.swing.JButton startGameBtn;
     protected javax.swing.JButton backBtn3;
-    
+
     // DatabaseGUI Components
     protected javax.swing.JButton addWordBtn;
     protected javax.swing.JButton backBtn2;
@@ -65,6 +69,17 @@ public class View extends JFrame implements Observer {
     protected javax.swing.JTextField newEnglishWord;
     protected javax.swing.JTextField newSpanishWord;
     protected javax.swing.JRadioButton orderInSpanishBtn;
+    protected DefaultListModel<String> model;
+    protected javax.swing.JButton removeWordBtn;
+    protected String lastSelectedItem = "";
+    
+    // StatsGUI Components
+    protected javax.swing.JButton backBtn1;
+    private javax.swing.JLabel jLabel6;
+    protected javax.swing.JList<String> jList2;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane2;
+    protected javax.swing.JButton logoutBtn4;
 
     public View() {
         // frame options
@@ -125,8 +140,13 @@ public class View extends JFrame implements Observer {
                 }
 
             } else if (data.isInDb) {
-                this.getContentPane().removeAll();
-                initDatabaseMenuComponents();
+                if (data.listUpdated) {
+                    updateList();
+                } else {
+                    this.getContentPane().removeAll();
+                    initDatabaseMenuComponents();
+                }
+
             } else {
                 this.getContentPane().removeAll();
                 initMainMenuComponents();
@@ -136,29 +156,6 @@ public class View extends JFrame implements Observer {
             this.getContentPane().removeAll();
             initLoginComponents();
         }
-
-//        if (data.quitFlag) {
-//            System.exit(0);
-//        } else if (data.battleWonFlag) {
-//            this.updateBattleView(data.player, data.robot, data.rounds);
-//            this.roundNumberLabel.setText(data.winningTitle);
-//            this.roundMessageLabel.setText(data.winningSet);
-//            this.cardButton1.setEnabled(false);
-//
-//            for (int i = 0; i < Player.HAND_SIZE; i++) {
-//                this.cardButtons.get(i).setEnabled(false);
-//            }
-//
-//        } else if (!data.loginFlag) {
-//            this.loginUsernameField.setText("");
-//            this.loginPasswordField.setText("");
-//        } else if (data.loginFlag && !data.battleStartedFlag) {
-//            this.getContentPane().removeAll();
-//            initBattleComponents();
-//            this.updateBattleView(data.player, data.robot, data.rounds);
-//        } else if (data.battleStartedFlag) {
-//            this.updateBattleView(data.player, data.robot, data.rounds);
-//        }
     }
 
     protected void initLoginComponents() {
@@ -171,9 +168,11 @@ public class View extends JFrame implements Observer {
         logoutBtn = new javax.swing.JButton();
         backBtn3 = new javax.swing.JButton();
         backBtn2 = new javax.swing.JButton();
-        
+
         logoutBtn3 = new javax.swing.JButton();
         logoutBtn2 = new javax.swing.JButton();
+        logoutBtn4 = new javax.swing.JButton();
+        backBtn1 = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(102, 153, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -252,6 +251,8 @@ public class View extends JFrame implements Observer {
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+
+        pack();
 
         this.loginBtn.addActionListener(this.actionListener);
         this.exitBtn.addActionListener(this.actionListener);
@@ -366,7 +367,6 @@ public class View extends JFrame implements Observer {
         this.toPlayBtn.addActionListener(this.actionListener);
         this.toDatabaseBtn.addActionListener(this.actionListener);
         this.toStatsBtn.addActionListener(this.actionListener);
-        
 
         setVisible(true);
     }
@@ -390,7 +390,7 @@ public class View extends JFrame implements Observer {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         cardWord.setEnabled(false);
-        
+
         backBtn3.setForeground(new java.awt.Color(0, 0, 0));
         backBtn3.setText("Back");
 
@@ -423,7 +423,7 @@ public class View extends JFrame implements Observer {
                 cardLangActionPerformed(evt);
             }
         });
-        
+
         backBtn3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backBtnActionPerformed(evt);
@@ -472,84 +472,84 @@ public class View extends JFrame implements Observer {
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addComponent(backBtn3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(logoutBtn2))
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGap(51, 51, 51)
-                                .addComponent(jLabel4))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGap(73, 73, 73)
-                                .addComponent(numCards, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(157, 157, 157))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel6Layout.createSequentialGroup()
-                                        .addComponent(cardLang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(54, 54, 54)
-                                        .addComponent(isRevisionBtn))
-                                    .addComponent(jLabel1))
+                jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                                .addComponent(backBtn3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(startGameBtn))))
-                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(logoutBtn2))
                         .addGroup(jPanel6Layout.createSequentialGroup()
-                            .addGap(34, 34, 34)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel6Layout.createSequentialGroup()
-                            .addGap(184, 184, 184)
-                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(cardCountLabel)
-                                .addGroup(jPanel6Layout.createSequentialGroup()
-                                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(59, 59, 59))))))
-                .addContainerGap(42, Short.MAX_VALUE))
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(jPanel6Layout.createSequentialGroup()
+                                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(jPanel6Layout.createSequentialGroup()
+                                                                .addGap(51, 51, 51)
+                                                                .addComponent(jLabel4))
+                                                        .addGroup(jPanel6Layout.createSequentialGroup()
+                                                                .addGap(73, 73, 73)
+                                                                .addComponent(numCards, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(jPanel6Layout.createSequentialGroup()
+                                                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(157, 157, 157))
+                                                        .addGroup(jPanel6Layout.createSequentialGroup()
+                                                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addGroup(jPanel6Layout.createSequentialGroup()
+                                                                                .addComponent(cardLang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addGap(54, 54, 54)
+                                                                                .addComponent(isRevisionBtn))
+                                                                        .addComponent(jLabel1))
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(startGameBtn))))
+                                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(jPanel6Layout.createSequentialGroup()
+                                                        .addGap(34, 34, 34)
+                                                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(jPanel6Layout.createSequentialGroup()
+                                                        .addGap(184, 184, 184)
+                                                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                .addComponent(cardCountLabel)
+                                                                .addGroup(jPanel6Layout.createSequentialGroup()
+                                                                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addGap(59, 59, 59))))))
+                                .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel1))
-                .addGap(5, 5, 5)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(numCards, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cardLang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(startGameBtn)
-                    .addComponent(isRevisionBtn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cardCountLabel)
-                .addGap(0, 68, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(logoutBtn2)
-                    .addComponent(backBtn3)))
+                jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel4)
+                                        .addComponent(jLabel1))
+                                .addGap(5, 5, 5)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(numCards, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cardLang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(startGameBtn)
+                                        .addComponent(isRevisionBtn))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(34, 34, 34)
+                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cardCountLabel)
+                                .addGap(0, 68, Short.MAX_VALUE)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(logoutBtn2)
+                                        .addComponent(backBtn3)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -564,7 +564,97 @@ public class View extends JFrame implements Observer {
     }
 
     private void initStatsMenuComponents() {
-        // paste respective GUI code here
+        jPanel9 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        logoutBtn4 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList2 = new javax.swing.JList<>();
+        backBtn1 = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel9.setBackground(new java.awt.Color(102, 153, 0));
+        jPanel9.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel6.setFont(new java.awt.Font("Lucida Sans Unicode", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(51, 255, 51));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Statistics");
+        jLabel6.setBorder(new javax.swing.border.MatteBorder(null));
+        jLabel6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        logoutBtn4.setText("Log out");
+        logoutBtn4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutBtnActionPerformed(evt);
+            }
+        });
+
+        jList2.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(jList2);
+
+        backBtn1.setText("Back");
+        backBtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(backBtn1)
+                        .addGap(105, 105, 105)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(8, 8, 8))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel9Layout.createSequentialGroup()
+                        .addGap(188, 188, 188)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
+                .addComponent(logoutBtn4))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(logoutBtn4)
+                            .addComponent(backBtn1)))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 20, Short.MAX_VALUE))))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        pack();
+        
+        this.logoutBtn4.addActionListener(this.actionListener);
+        this.backBtn1.addActionListener(this.actionListener);
+        
+        setVisible(true);
     }
 
     private void initDatabaseMenuComponents() {
@@ -573,15 +663,28 @@ public class View extends JFrame implements Observer {
         logoutBtn3 = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        model = new DefaultListModel<>();
         orderInSpanishBtn = new javax.swing.JRadioButton();
         newEnglishWord = new javax.swing.JTextField();
         newSpanishWord = new javax.swing.JTextField();
         addWordBtn = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         backBtn2 = new javax.swing.JButton();
+        removeWordBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        model.clear();
+        int currentNum = 1;
+        for (Word word : data.words) {
+            model.addElement(currentNum + ") " + word.getEnglish() + " - " + word.getSpanish());
+            currentNum++;
+        }
+
+        jList1 = new javax.swing.JList<String>(model);
+        jList1.addListSelectionListener((ListSelectionEvent e) -> {
+            System.out.println("LIST: "+jList1.getSelectedValue());
+        });
 
         jPanel7.setBackground(new java.awt.Color(102, 153, 0));
         jPanel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -600,11 +703,6 @@ public class View extends JFrame implements Observer {
             }
         });
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(jList1);
 
         orderInSpanishBtn.setText("Order in Spanish");
@@ -614,12 +712,22 @@ public class View extends JFrame implements Observer {
             }
         });
 
-        newEnglishWord.setText("english");
+        if (!data.wordAdded) {
+            newEnglishWord.setText("english");
+            newSpanishWord.setText("spanish");
+        }
 
-        newSpanishWord.setText("spanish");
-        newSpanishWord.addActionListener(new java.awt.event.ActionListener() {
+        removeWordBtn.setForeground(new java.awt.Color(0, 0, 0));
+        removeWordBtn.setText("Remove Word");
+        removeWordBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newSpanishWordActionPerformed(evt);
+                removeWordBtnWordActionPerformed(evt);
+            }
+        });
+
+        addWordBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newWordBtnActionPerformed(evt);
             }
         });
 
@@ -638,85 +746,94 @@ public class View extends JFrame implements Observer {
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addComponent(backBtn2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(logoutBtn3))
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(188, 188, 188)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(97, 97, 97)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addGap(68, 68, 68)
-                                .addComponent(newEnglishWord, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(newSpanishWord, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addGap(138, 138, 138)
-                                .addComponent(addWordBtn))
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addGap(101, 101, 101)
-                                .addComponent(jLabel9))))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(106, 106, 106)
-                        .addComponent(orderInSpanishBtn)))
-                .addContainerGap(40, Short.MAX_VALUE))
+                jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                                .addComponent(backBtn2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(logoutBtn3))
+                        .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel7Layout.createSequentialGroup()
+                                                .addGap(188, 188, 188)
+                                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel7Layout.createSequentialGroup()
+                                                .addGap(36, 36, 36)
+                                                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel7Layout.createSequentialGroup()
+                                                .addGap(106, 106, 106)
+                                                .addComponent(orderInSpanishBtn))
+                                        .addGroup(jPanel7Layout.createSequentialGroup()
+                                                .addGap(97, 97, 97)
+                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(jPanel7Layout.createSequentialGroup()
+                                                                .addGap(13, 13, 13)
+                                                                .addComponent(newEnglishWord, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(newSpanishWord, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(jPanel7Layout.createSequentialGroup()
+                                                                .addGap(83, 83, 83)
+                                                                .addComponent(addWordBtn))
+                                                        .addGroup(jPanel7Layout.createSequentialGroup()
+                                                                .addGap(46, 46, 46)
+                                                                .addComponent(jLabel9))
+                                                        .addGroup(jPanel7Layout.createSequentialGroup()
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(removeWordBtn)))))
+                                .addContainerGap(40, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(orderInSpanishBtn)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(newEnglishWord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(newSpanishWord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(addWordBtn)
-                        .addGap(90, 90, 90)))
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(logoutBtn3)
-                    .addComponent(backBtn2)))
+                jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(orderInSpanishBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel7Layout.createSequentialGroup()
+                                                .addGap(0, 80, Short.MAX_VALUE)
+                                                .addComponent(jLabel9)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(newEnglishWord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(newSpanishWord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(jPanel7Layout.createSequentialGroup()
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(addWordBtn)
+                                                                .addGap(90, 90, 90)
+                                                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                        .addComponent(logoutBtn3)
+                                                                        .addComponent(backBtn2)))
+                                                        .addGroup(jPanel7Layout.createSequentialGroup()
+                                                                .addGap(112, 112, 112)
+                                                                .addComponent(removeWordBtn))))
+                                        .addGroup(jPanel7Layout.createSequentialGroup()
+                                                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jScrollPane1)
+                                                .addContainerGap())))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
-        
+
         this.logoutBtn3.addActionListener(this.actionListener);
         this.backBtn2.addActionListener(this.actionListener);
         this.addWordBtn.addActionListener(this.actionListener);
         this.orderInSpanishBtn.addActionListener(this.actionListener);
+        this.removeWordBtn.addActionListener(this.actionListener);
 
         setVisible(true);
     }
@@ -724,14 +841,14 @@ public class View extends JFrame implements Observer {
     // may also need function to update certain views
     public void addActionListener(ActionListener actionListener) {
         this.actionListener = actionListener;
-        
+
 //        //initDatabaseMenuComponents();
 //        initMainMenuComponents();
 //        this.getContentPane().removeAll();
 //        initGameMenuComponents();
 //        this.getContentPane().removeAll();
         initLoginComponents(); // start login screen
-        
+
         setVisible(true);
     }
 
@@ -739,7 +856,7 @@ public class View extends JFrame implements Observer {
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
-    
+
     private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
@@ -772,16 +889,32 @@ public class View extends JFrame implements Observer {
             numCards.setText("10");
         }
     }
-    
-    private void newSpanishWordActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+
+    private void newWordBtnActionPerformed(java.awt.event.ActionEvent evt) {
+        if (!data.wordAdded) {
+            JOptionPane.showMessageDialog(null, "Unable to be added. Ensure word is alphanumeric without spaces and not already within database then try again.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Word Added: " + newSpanishWord.getText() + " - to " + newEnglishWord.getText());
+            data.wordAdded = false;
+        }
+
+//        newSpanishWord.setText("");
+//        newEnglishWord.setText("");
     }
-    
+
     private void orderInSpanishWordActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        removeWordBtn.setEnabled(!removeWordBtn.isEnabled());
     }
-    
-    
+
+    private void removeWordBtnWordActionPerformed(java.awt.event.ActionEvent evt) {
+        if (!data.wordRemoved) {
+            JOptionPane.showMessageDialog(null, "Error: Please select a word to remove.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Word removed: " + this.lastSelectedItem);
+        }
+
+        //jList1.setSelectedIndex(0);
+    }
 
     private void deactivateConfig() {
         // deactivate config options
@@ -796,5 +929,23 @@ public class View extends JFrame implements Observer {
         cardWord.setText(data.currentCard.getQuestion());
         cardCountLabel.setText("Card: " + data.cardsRemaining);
         //JOptionPane.showMessageDialog(null, data.currentCard.getQuestion()); // for testing
+    }
+
+    private void updateList() {
+        int currentNum = 1;
+        model.clear();
+        if (orderInSpanishBtn.isSelected()) {
+            for (Word word : data.words) {
+                model.addElement(currentNum + ") " + word.getSpanish() + " - " + word.getEnglish());
+                currentNum++;
+            }
+        } else {
+            for (Word word : data.words) {
+                model.addElement(currentNum + ") " + word.getEnglish() + " - " + word.getSpanish());
+                currentNum++;
+            }
+        }
+
+        jList1.setModel(model);
     }
 }

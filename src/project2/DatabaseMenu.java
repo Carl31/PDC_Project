@@ -16,7 +16,7 @@ import java.util.Set;
  *
  * @author carls
  */
-public class DatabaseMenu extends Menu { // Line 78!!!!!!
+public class DatabaseMenu { // Line 78!!!!!!
 
     private ModelData data;
     private Map<String, String> words;
@@ -25,63 +25,6 @@ public class DatabaseMenu extends Menu { // Line 78!!!!!!
         this.data = data;
     }
     
-    @Override
-    public void run() {
-        // initialising variables
-        
-        int input = 0;
-
-        System.out.println("\nWelcome to our word database!");
-
-        // keeps looping until  user goes 'back' (presses 4).
-        while (input != 4) {
-            System.out.println("\n\t\tDATABASE MENU:");
-            System.out.println("\nWhat would you like to do?");
-            System.out.println("\t 1 - View Database: View all words!");
-            System.out.println("\t 2 - Word Search: Search for a translation!");
-            System.out.println("\t 3 - Edit Database: Create new words or delete existing words!");
-            System.out.println("\t 4 - Go Back: Back to main menu.");
-
-            while (input < 1 || input > 4) {
-                input = InputGetter.getPosInt("Enter \'1\', \'2\', \'3\' or \'4\': ",4);
-            }
-
-            switch (input) {
-                case (1):
-                    printAlphabetically(words);
-                    break;
-                case (2):
-                    String prefix = InputGetter.getAlphanumeric("Enter prefix or word (add \"to \" infront of english words):");
-                    printAlphabetically(searchWords(prefix));
-                    break;
-                case (3):
-                    int option = 0;
-                    System.out.println("\t\t 1 - Create a word");
-                    System.out.println("\t\t 2 - Delete a word");
-                    System.out.println("\t\t 3 - Back");
-                    option = InputGetter.getPosInt("Enter \'1\', \'2\' or  \'3\': ", 3);
-
-                    switch (option) {
-                        case (1):
-                            createWord();
-                            break;
-                        case (2):
-                            deleteWord(InputGetter.getAlphanumeric("Enter spanish word to delete: "));
-                            break;
-                        case (3):
-                            break;
-                    }
-                    break;
-                default:
-                    break;
-            }
-            //wfrw.writeTo(words); WRITE TO DB
-            if (input != 4) {
-                input = 0;
-            }
-        }
-    }
-
     /*
     * Allows user to add a word to the database  
     */

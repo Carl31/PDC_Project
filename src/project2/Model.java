@@ -4,6 +4,7 @@
 package project2;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -278,6 +279,54 @@ public class Model extends Observable {
         for (Word temp : data.getUser().getIncorrectWords()) {
             cards.add(new Card(configData.getLang(), temp));
         }
+    }
+
+    protected void getDbWords(boolean sortInSpanish, boolean retrieveFromDb) {
+        ArrayList<Word> tempWords = data.words;
+        if (retrieveFromDb) tempWords = db.getWordsAsArray();
+
+        
+        if (sortInSpanish) {
+            tempWords.sort(new Comparator<Word>() {
+            @Override
+            public int compare(Word w1, Word w2) {
+                return (w1.getSpanish().compareTo(w2.getSpanish()));
+            }
+        });
+        } else {
+            tempWords.sort(new Comparator<Word>() {
+            @Override
+            public int compare(Word w1, Word w2) {
+                return (w1.getEnglish().compareTo(w2.getEnglish()));
+            }
+        });
+        }
+        this.data.words = tempWords;
+    }
+    
+    protected void addWord(String eng, String esp) {
+        data.wordAdded = false;
+        if (!db.containsWord(esp)) {
+            if (isAlphanumeric(eng) && isAlphanumeric(esp) && !esp.equals("") && !esp.equals("")) {
+                db.insertWord(new Word(esp, "to "+eng));
+                data.wordAdded = true;
+                data.listUpdated = true;
+            }
+        }
+    }
+    
+    protected void removeWord(String selected) {
+        String[] esp = selected.split(" ", 5);
+        data.listUpdated = false;
+        data.wordRemoved = false;
+        if (db.deleteWord(esp[4])) {
+            data.wordRemoved = true;
+            data.listUpdated = true;
+        }
+    }
+    
+    private boolean isAlphanumeric(String word) {
+        return (word.matches("[a-zA-Z\u00f1]*"));
     }
 
 }

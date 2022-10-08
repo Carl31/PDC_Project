@@ -27,6 +27,9 @@ public class ModelData {
     protected boolean hasAnswered; // if user has given their answer
     protected boolean displayWarning; // for displaying a message before a game has started
     protected boolean isInDb; // if user is in database menu
+    protected boolean listUpdated; // if list of words needs refreshing
+    protected boolean wordAdded; // check is new word was added to db successfully
+    protected boolean wordRemoved; // check if selected word was removed from db successfully
     
     public ModelData() {
         this.user = null;
@@ -46,6 +49,9 @@ public class ModelData {
         this.hasAnswered = false;
         this.displayWarning = false;
         this.isInDb = false;
+        this.listUpdated = false;
+        this.wordAdded = false;
+        this.wordRemoved = false;
     }
     
     public ModelData(String username, UserData user) {

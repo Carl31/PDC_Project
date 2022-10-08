@@ -299,4 +299,43 @@ public class Database {
             insertWord(word);
         }
     }
+
+    public boolean deleteWord(String spanish) {
+        boolean deleted = false;
+        if (containsWord(spanish)) {
+            try {
+                Statement statement = conn.createStatement();
+
+                statement.executeUpdate("DELETE FROM WordData WHERE spanish = '" + spanish + "'");
+                wordIdNum++;
+                deleted = true;
+            } catch (SQLException ex) {
+                Logger.getLogger(Database.class
+                        .getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("Deleted: " + spanish); // for testing
+        } else {
+            System.out.println("Doesn't contain word: " + spanish); // for testing
+        }
+        
+        return deleted;
+    }
+
+    public boolean containsWord(String spanish) {
+        boolean isPresent = false;
+        try {
+            Statement statement = conn.createStatement();
+
+            ResultSet rs = statement.executeQuery("SELECT wordId FROM WordData WHERE spanish = '" + spanish + "'");
+
+            if (rs.next()) {
+                isPresent = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return isPresent;
+    }
 }

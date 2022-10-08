@@ -34,7 +34,7 @@ public class Controller implements ActionListener {
                 }
             }
 
-        } else if (actionCommand.equals(view.logoutBtn.getActionCommand()) || actionCommand.equals(view.logoutBtn.getActionCommand())) {
+        } else if (actionCommand.equals(view.logoutBtn.getActionCommand()) || actionCommand.equals(view.logoutBtn2.getActionCommand()) || actionCommand.equals(view.logoutBtn3.getActionCommand()) || actionCommand.equals(view.logoutBtn4.getActionCommand())) {
             // upon logout
             model.logout();
             model.notifyView();
@@ -49,10 +49,29 @@ public class Controller implements ActionListener {
         } else if (actionCommand.equals(view.toDatabaseBtn.getActionCommand())) {
             model.data.isInDb = true;
             model.data.setIsPlaying(false);
+            model.getDbWords(false, true);
             model.notifyView();
-        } else if (actionCommand.equals(view.backBtn3.getActionCommand()) || actionCommand.equals(view.backBtn2.getActionCommand())) {
+        } else if (actionCommand.equals(view.backBtn3.getActionCommand()) || actionCommand.equals(view.backBtn2.getActionCommand()) || actionCommand.equals(view.backBtn1.getActionCommand())) {
             model.data.isInDb = false;
             model.data.setIsPlaying(false);
+            model.notifyView();
+        } else if (actionCommand.equals(view.orderInSpanishBtn.getActionCommand())) {
+            model.getDbWords(view.orderInSpanishBtn.isSelected(), false);
+            model.data.listUpdated = true;
+            model.notifyView();
+            model.data.listUpdated = false;
+        } else if (actionCommand.equals(view.addWordBtn.getActionCommand())) {
+            model.data.wordAdded = false;
+            model.addWord(view.newEnglishWord.getText(), view.newSpanishWord.getText());
+            if (model.data.wordAdded) model.getDbWords(view.orderInSpanishBtn.isSelected(), true);
+            model.notifyView();
+        } else if (actionCommand.equals(view.removeWordBtn.getActionCommand())) {
+            if (!view.jList1.isSelectionEmpty()) {
+                view.lastSelectedItem = view.jList1.getSelectedValue();
+                model.removeWord(view.jList1.getSelectedValue());
+                if (model.data.wordRemoved) model.getDbWords(view.orderInSpanishBtn.isSelected(), true);
+                model.data.listUpdated = true;
+            }
             model.notifyView();
         } else if (actionCommand.equals(view.startGameBtn.getActionCommand())) {
             while (view.data.isPlaying()) {
@@ -65,5 +84,8 @@ public class Controller implements ActionListener {
             }
             model.notifyView();
         }
+        
+        //model.data.listUpdated = false;
+        
     }
 }
