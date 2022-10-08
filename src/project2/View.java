@@ -146,7 +146,9 @@ public class View extends JFrame implements Observer {
                     this.getContentPane().removeAll();
                     initDatabaseMenuComponents();
                 }
-
+            } else if (data.isInStats) {
+                this.getContentPane().removeAll();
+                initStatsMenuComponents();
             } else {
                 this.getContentPane().removeAll();
                 initMainMenuComponents();

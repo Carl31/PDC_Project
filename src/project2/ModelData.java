@@ -30,6 +30,7 @@ public class ModelData {
     protected boolean listUpdated; // if list of words needs refreshing
     protected boolean wordAdded; // check is new word was added to db successfully
     protected boolean wordRemoved; // check if selected word was removed from db successfully
+    protected boolean isInStats; // to check if user is in statistics menu
     
     public ModelData() {
         this.user = null;
@@ -52,6 +53,7 @@ public class ModelData {
         this.listUpdated = false;
         this.wordAdded = false;
         this.wordRemoved = false;
+        this.isInStats = false;
     }
     
     public ModelData(String username, UserData user) {

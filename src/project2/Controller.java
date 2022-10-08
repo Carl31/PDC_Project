@@ -46,6 +46,9 @@ public class Controller implements ActionListener {
             model.data.setGameEnded(false);
             model.data.isWaiting = false;
             model.notifyView();
+        } else if (actionCommand.equals(view.toStatsBtn.getActionCommand())) {
+            model.data.isInStats = true;
+            model.notifyView();
         } else if (actionCommand.equals(view.toDatabaseBtn.getActionCommand())) {
             model.data.isInDb = true;
             model.data.setIsPlaying(false);
@@ -53,6 +56,7 @@ public class Controller implements ActionListener {
             model.notifyView();
         } else if (actionCommand.equals(view.backBtn3.getActionCommand()) || actionCommand.equals(view.backBtn2.getActionCommand()) || actionCommand.equals(view.backBtn1.getActionCommand())) {
             model.data.isInDb = false;
+            model.data.isInStats = false;
             model.data.setIsPlaying(false);
             model.notifyView();
         } else if (actionCommand.equals(view.orderInSpanishBtn.getActionCommand())) {
