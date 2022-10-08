@@ -28,7 +28,7 @@ public class Controller implements ActionListener {
         if (actionCommand.equals(view.loginBtn.getActionCommand())) {
             // upon login
             if (model.verifyUsername(view.username.getText())) {
-                model.data = model.db.getUser(view.username.getText());
+                model.data = model.getDb().getUser(view.username.getText());
                 if (model.data.isLoggedIn()) {
                     model.notifyView();
                 }

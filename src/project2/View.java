@@ -108,7 +108,7 @@ public class View extends JFrame implements Observer {
                         }
                     }
                 } else if (data.displayWarning) {
-                    JOptionPane.showMessageDialog(null, data.message);
+                    JOptionPane.showMessageDialog(null, data.getMessage());
                 } else {
                     if (data.isWaiting) {
                         if (data.configEnabled == false) {
@@ -130,7 +130,7 @@ public class View extends JFrame implements Observer {
                             }
 
                             if (data.hasAnswered) {
-                                JOptionPane.showMessageDialog(null, data.message);
+                                JOptionPane.showMessageDialog(null, data.getMessage());
                             }
 
                         }
@@ -684,7 +684,7 @@ public class View extends JFrame implements Observer {
 
         dbModel.clear();
         int currentNum = 1;
-        for (Word word : data.words) {
+        for (Word word : data.getWords()) {
             dbModel.addElement(currentNum + ") " + word.getEnglish() + " - " + word.getSpanish());
             currentNum++;
         }
@@ -940,12 +940,12 @@ public class View extends JFrame implements Observer {
         int currentNum = 1;
         dbModel.clear();
         if (orderInSpanishBtn.isSelected()) {
-            for (Word word : data.words) {
+            for (Word word : data.getWords()) {
                 dbModel.addElement(currentNum + ") " + word.getSpanish() + " - " + word.getEnglish());
                 currentNum++;
             }
         } else {
-            for (Word word : data.words) {
+            for (Word word : data.getWords()) {
                 dbModel.addElement(currentNum + ") " + word.getEnglish() + " - " + word.getSpanish());
                 currentNum++;
             }

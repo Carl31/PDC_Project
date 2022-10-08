@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class Model extends Observable {
 
     public ModelData data;
-    protected Database db;
+    private Database db;
     private GameConfig configData;
     private ArrayList<Word> wordData;
 
@@ -54,6 +54,7 @@ public class Model extends Observable {
 //        // ensure ModelData for statsMenu is updated
 //        statsMenu.run();
 //    }
+    
     public void logout() {
         this.data.setUsername("");
         this.data.setUser(null);
@@ -91,11 +92,11 @@ public class Model extends Observable {
     }
 
     protected void exitGame() {
-        db.closeConnections();
+        getDb().closeConnections();
         System.exit(0);
     }
 
-    protected void startGame() {
+    public void startGame() {
 
         if (!configData.isRevision()) {
             try {
@@ -105,13 +106,13 @@ public class Model extends Observable {
         } else {
 
             if (data.getUser().getIncorrectWords().isEmpty()) { // checks if user has incorrect words to revise
-                data.message = "Unable to revise: Revision pile empty!!";
+                data.setMessage("Unable to revise: Revision pile empty!!");
                 data.displayWarning = true;
                 notifyView();
                 data.displayWarning = false;
                 data.setIsPlaying(false);
             } else {
-                data.message = "Rules: Revision stops when you have correctly answered ALL your cards.\nRevision doesn't affect user scores.";
+                data.setMessage("Rules: Revision stops when you have correctly answered ALL your cards.\nRevision doesn't affect user scores.");
                 data.displayWarning = true;
                 notifyView();
                 data.displayWarning = false;
@@ -184,9 +185,9 @@ public class Model extends Observable {
                 if (!data.getUser().getIncorrectWords().contains(c.getWord())) {
                     data.getUser().getIncorrectWords().add(c.getWord());
                 }
-                data.message = "Wrong! The correct answer is\n\t " + data.currentCard.getAnswer().toUpperCase();
+                data.setMessage("Wrong! The correct answer is\n\t " + data.currentCard.getAnswer().toUpperCase());
             } else {
-                data.message = "Correct!";
+                data.setMessage("Correct!");
             }
 
             notifyView();
@@ -202,9 +203,9 @@ public class Model extends Observable {
         score = ((float) finalScore / (float) getConfigData().getNumCards()) * 100;
         data.getUser().addToCorrectPercent(score);
         data.getUser().incrementGamesPlayed();
-        data.message = String.format("\nYou got: %.2f%%\nGo to the \'revision\' section to revise what you got wrong!", score);
+        data.setMessage(String.format("\nYou got: %.2f%%\nGo to the \'revision\' section to revise what you got wrong!", score));
 
-        db.UpdateUserData(data.getUsername(), data.getUser(), data.getUser().getIncorrectWords());
+        getDb().UpdateUserData(data.getUsername(), data.getUser(), data.getUser().getIncorrectWords());
         notifyView();
     }
 
@@ -224,7 +225,7 @@ public class Model extends Observable {
         notifyView();
         data.configEnabled = true;
 
-        data.message = "Revision starting!";
+        data.setMessage("Revision starting!");
 
         // start game
         while (!cards.isEmpty() && data.isPlaying()) {
@@ -249,11 +250,11 @@ public class Model extends Observable {
             // if incorrect, add card to back of queue
             if (finalScore <= prevScore) {
                 getCards().add(getCards().remove());
-                data.message = "Wrong! The correct answer is\n\t " + data.currentCard.getAnswer().toUpperCase();
+                data.setMessage("Wrong! The correct answer is\n\t " + data.currentCard.getAnswer().toUpperCase());
             } else { // if correct, remove card from queue
                 getCards().remove();
                 total++;
-                data.message = "Correct!";
+                data.setMessage("Correct!");
             }
             notifyView();
             prevScore = finalScore;
@@ -266,8 +267,8 @@ public class Model extends Observable {
             data.getUser().getIncorrectWords().add(tempCard.getWord());
         }
         data.displayCard = false;
-        data.message = "Revision finished. Cards revised: " + total;
-        db.UpdateUserData(data.getUsername(), data.getUser(), data.getUser().getIncorrectWords());
+        data.setMessage("Revision finished. Cards revised: " + total);
+        getDb().UpdateUserData(data.getUsername(), data.getUser(), data.getUser().getIncorrectWords());
         notifyView();
     }
 
@@ -278,9 +279,9 @@ public class Model extends Observable {
         }
     }
 
-    protected void getDbWords(boolean sortInSpanish, boolean retrieveFromDb) {
-        ArrayList<Word> tempWords = data.words;
-        if (retrieveFromDb) tempWords = db.getWordsAsArray();
+    public void getDbWords(boolean sortInSpanish, boolean retrieveFromDb) {
+        ArrayList<Word> tempWords = data.getWords();
+        if (retrieveFromDb) tempWords = getDb().getWordsAsArray();
 
         
         if (sortInSpanish) {
@@ -298,14 +299,14 @@ public class Model extends Observable {
             }
         });
         }
-        this.data.words = tempWords;
+        this.data.setWords(tempWords);
     }
     
     protected void addWord(String eng, String esp) {
         data.wordAdded = false;
         if (!db.containsWord(esp)) {
             if (isAlphanumeric(eng) && isAlphanumeric(esp) && !esp.equals("") && !esp.equals("")) {
-                db.insertWord(new Word(esp, "to "+eng));
+                getDb().insertWord(new Word(esp, "to "+eng));
                 data.wordAdded = true;
                 data.listUpdated = true;
             }
@@ -316,7 +317,7 @@ public class Model extends Observable {
         String[] esp = selected.split(" ", 5);
         data.listUpdated = false;
         data.wordRemoved = false;
-        if (db.deleteWord(esp[4])) {
+        if (getDb().deleteWord(esp[4])) {
             data.wordRemoved = true;
             data.listUpdated = true;
         }
@@ -366,6 +367,20 @@ public class Model extends Observable {
      */
     public void setCards(Queue<Card> cards) {
         this.cards = cards;
+    }
+
+    /**
+     * @return the db
+     */
+    public Database getDb() {
+        return db;
+    }
+
+    /**
+     * @param db the db to set
+     */
+    public void setDb(Database db) {
+        this.db = db;
     }
     
     

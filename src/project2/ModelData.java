@@ -15,9 +15,9 @@ public class ModelData {
     private boolean isLoggedIn;
     private boolean isPlaying; // when user is in play mode
     private boolean canStart; // when all game config options are entered as valid
-    protected ArrayList<Word> words; // all word data from db
+    private ArrayList<Word> words; // all word data from db
     private boolean gameEnded; // if game is over
-    protected String message; // message to be printed to screen
+    private String message; // message to be printed to screen
     protected String cardsRemaining;
     protected String userAnswer;
     protected Card currentCard;
@@ -151,6 +151,34 @@ public class ModelData {
      */
     public void setGameEnded(boolean gameEnded) {
         this.gameEnded = gameEnded;
+    }
+
+    /**
+     * @return the message
+     */
+    public String getMessage() {
+        return message;
+    }
+
+    /**
+     * @param message the message to set
+     */
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    /**
+     * @return the words
+     */
+    public ArrayList<Word> getWords() {
+        return words;
+    }
+
+    /**
+     * @param words the words to set
+     */
+    public void setWords(ArrayList<Word> words) {
+        this.words = words;
     }
     
     

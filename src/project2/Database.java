@@ -183,7 +183,7 @@ public class Database {
         return usersWords;
     }
 
-    private void insertTestData() { // for testing purposes only
+    public void insertTestData() { // for testing purposes only
         try {
             Statement statement = conn.createStatement();
             statement.executeUpdate("INSERT INTO WordData VALUES(0, 'Hola', 'Hello')");
