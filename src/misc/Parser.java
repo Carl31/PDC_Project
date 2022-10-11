@@ -3,6 +3,7 @@ package misc;
 /*
  * Used for parsing word data (words.txt) into Derby DB (note: drop all tables before running)
  * Only needs to be ran once on every new device attempting to execute PDC_Project.java.
+ * Note: is the same code within the inject() function within Database.java
  *
  * @see PDC_Project.java
  */

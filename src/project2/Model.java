@@ -7,12 +7,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Observable;
 import java.util.Queue;
 import java.util.Random;
-import java.util.Timer;
-import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -55,6 +52,9 @@ public class Model extends Observable {
 //        statsMenu.run();
 //    }
     
+    /*
+    * Sets the appropriate variables upon user logout
+    */
     public void logout() {
         this.data.setUsername("");
         this.data.setUser(null);
@@ -64,11 +64,17 @@ public class Model extends Observable {
         this.data.isInStats = false;
     }
 
+    /*
+    * Notifies the view of any variables changes
+    */
     public void notifyView() {
         this.setChanged();
         notifyObservers(data);
     }
 
+    /*
+    * Verifies validity of username
+    */
     public boolean verifyUsername(String username) {
         if (username == null || username.length() < 3) {
             return false;
@@ -77,6 +83,9 @@ public class Model extends Observable {
         return isAllowedName(username.toCharArray());
     }
 
+    /*
+    * Helper method for verifying username
+    */
     private boolean isAllowedName(char[] username) {
         boolean isValid = true;
 
@@ -91,11 +100,17 @@ public class Model extends Observable {
         return isValid;
     }
 
+    /*
+    * Closes db connections and exists the game
+    */
     protected void exitGame() {
         getDb().closeConnections();
         System.exit(0);
     }
-
+    
+    /*
+    * Starts verbcards game (either type)
+    */
     public void startGame() {
 
         if (!configData.isRevision()) {
@@ -127,6 +142,9 @@ public class Model extends Observable {
         notifyView();
     }
 
+    /*
+    * Generates the cards required for the non-revision game
+    */
     public void generateCards() {
         getCards().clear();
         Word newWord = null;
@@ -146,6 +164,9 @@ public class Model extends Observable {
         }
     }
 
+    /*
+    * Starts a flash card game
+    */
     public void startFlashCardGame() throws InterruptedException {
         // init variables...
         generateCards();
@@ -209,6 +230,9 @@ public class Model extends Observable {
         notifyView();
     }
 
+    /*
+    * Starts a non-revision flashcard game
+    */
     public void startRevisionFlashCardGame() throws InterruptedException {
         generateUserCards();
         finalScore = 0;
@@ -272,6 +296,9 @@ public class Model extends Observable {
         notifyView();
     }
 
+    /*
+    * Generates cards for a revision flashcard game
+    */
     private void generateUserCards() {
         getCards().clear();
         for (Word temp : data.getUser().getIncorrectWords()) {
@@ -279,6 +306,9 @@ public class Model extends Observable {
         }
     }
 
+    /*
+    * Gets all db words and returns in order of english or spanish
+    */
     public void getDbWords(boolean sortInSpanish, boolean retrieveFromDb) {
         ArrayList<Word> tempWords = data.getWords();
         if (retrieveFromDb) tempWords = getDb().getWordsAsArray();
@@ -302,6 +332,9 @@ public class Model extends Observable {
         this.data.setWords(tempWords);
     }
     
+    /*
+    * Attemps to add a word to the db
+    */
     protected void addWord(String eng, String esp) {
         data.wordAdded = false;
         if (!db.containsWord(esp)) {
@@ -313,6 +346,9 @@ public class Model extends Observable {
         }
     }
     
+    /*
+    * Attempts to remove a word from the database
+    */
     protected void removeWord(String selected) {
         String[] esp = selected.split(" ", 5);
         data.listUpdated = false;
@@ -323,6 +359,9 @@ public class Model extends Observable {
         }
     }
     
+    /*
+    * Helper method for checking if string is alphanumeric
+    */
     private boolean isAlphanumeric(String word) {
         return (word.matches("[a-zA-Z\u00f1]*"));
     }

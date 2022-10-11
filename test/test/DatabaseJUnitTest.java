@@ -1,5 +1,5 @@
 /*
- * Test to see if cards are generated correctly.
+ * Test to see if database methods are functioning as expected
  */
 package test;
 

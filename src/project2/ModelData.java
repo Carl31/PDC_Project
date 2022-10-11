@@ -63,6 +63,9 @@ public class ModelData {
         this.isLoggedIn = true;
     }
     
+    /*
+    * Upon logout
+    */
     public void logOut() {
         this.setIsLoggedIn(false);
         this.setUser(null);
@@ -179,11 +182,5 @@ public class ModelData {
      */
     public void setWords(ArrayList<Word> words) {
         this.words = words;
-    }
-    
-    
-    
-    
-    
-    
+    } 
 }

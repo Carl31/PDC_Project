@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * The database class for the application. Derby DB.
  */
 package project2;
 
@@ -31,8 +29,10 @@ public class Database {
     String dbpassword = "pdc";  //your DB password
     private static int userIdNum = 0;
     private static int wordIdNum = 0;
-
-    //Setting up DerbyDB
+    
+    /*
+     * Setting up the database -- create tables and injects word data if not present. 
+    */
     public void dbsetup() {
         try {
             conn = DriverManager.getConnection(url, dbusername, dbpassword);
@@ -73,7 +73,9 @@ public class Database {
         }
     }
 
-    //Method to check the username for the login. If no user exists, create it with empty scores.
+    /*
+    * Method to check the username for the login. If no user exists, create it with empty scores.
+    */
     public ModelData getUser(String username) {
         ModelData data = new ModelData();
 
@@ -109,6 +111,9 @@ public class Database {
         return data;
     }
 
+    /*
+     * Checks if a table exists in the database already
+    */
     private boolean checkIfTableExists(String newTableName) {
         boolean isPresent = false;
         try {
@@ -130,7 +135,9 @@ public class Database {
         return isPresent;
     }
 
-    // saves user data to userdata table
+    /*
+    * Saves user data to userdata table
+    */
     public void UpdateUserData(String username, UserData data, HashSet<Word> incorrectWords) {
         Statement statement;
         try {
@@ -144,6 +151,9 @@ public class Database {
         }
     }
 
+    /*
+    * Closes connection to the database -- error-catching
+    */
     public void closeConnections() {
         if (conn != null) {
             try {
@@ -155,7 +165,9 @@ public class Database {
         }
     }
 
-    // a function for getting words set based on userId
+    /*
+    * Gets users incorrect words as a set based on userId
+    */
     public HashSet<Word> getWords(int id) {
         HashSet<Word> usersWords = new HashSet<>();
         String spanish = "";
@@ -183,7 +195,10 @@ public class Database {
         return usersWords;
     }
 
-    public void insertTestData() { // for testing purposes only
+    /*
+    * Inserts test data into the database (for testing only)
+    */
+    public void insertTestData() {
         try {
             Statement statement = conn.createStatement();
             statement.executeUpdate("INSERT INTO WordData VALUES(0, 'Hola', 'Hello')");
@@ -195,7 +210,9 @@ public class Database {
         }
     }
 
-    // a function for updating user-word mappings
+    /*
+    * Updates the user-word mappings
+    */ 
     private void updateMappingTable(String username, HashSet<Word> words) {
         // for all words in the set, add the word-user map entry if it already doesn't exist                
         HashSet<Word> incorrectWords = new HashSet<Word>();
@@ -249,6 +266,9 @@ public class Database {
         }
     }
 
+    /*
+    * Gets all words from database as an array list
+    */
     public ArrayList<Word> getWordsAsArray() {
         ArrayList<Word> dbWords = new ArrayList<Word>();
 
@@ -276,6 +296,9 @@ public class Database {
         return dbWords;
     }
 
+    /*
+    * Deletes all user incorrect words from database
+    */
     private void clearUsersWords(String userId) {
         try {
             Statement statement = conn.createStatement();
@@ -299,12 +322,18 @@ public class Database {
         System.out.println("Inserted: " + word.getSpanish()); // for testing
     }
 
+    /*
+    * Inserts an array list of words into database
+    */
     public void insertWords(ArrayList<Word> words) {
         for (Word word : words) {
             insertWord(word);
         }
     }
 
+    /*
+    * Deletes a single word from the database (spanish word being the unique key)
+    */
     public boolean deleteWord(String spanish) {
         boolean deleted = false;
         if (containsWord(spanish)) {
@@ -326,6 +355,9 @@ public class Database {
         return deleted;
     }
 
+    /*
+    * Returns if a word exists in the database
+    */
     public boolean containsWord(String spanish) {
         boolean isPresent = false;
         try {
@@ -344,6 +376,9 @@ public class Database {
         return isPresent;
     }
     
+    /*
+    * Injects empty database with word data from words.txt file.
+    */
     private void inject() {
         try {
 

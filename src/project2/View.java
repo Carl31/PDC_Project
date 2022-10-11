@@ -1,19 +1,14 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * The View class for the MVC 
  */
 package project2;
 
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.event.ListSelectionEvent;
 
 /**
  *
@@ -91,6 +86,11 @@ public class View extends JFrame implements Observer {
         data = new ModelData();
     }
 
+    /**
+     * Updates the view with new ModelData
+     * @param o
+     * @param arg
+     */
     @Override
     public void update(Observable o, Object arg) {
         data = (ModelData) arg;
@@ -140,22 +140,22 @@ public class View extends JFrame implements Observer {
                     }
                 }
 
-            } else if (data.isInDb) {
-                if (data.listUpdated) {
+            } else if (data.isInDb) { // if player is in the database menu
+                if (data.listUpdated) { // if list of words needs to be refreshed
                     updateWordsList();
-                } else {
+                } else { // load database screen
                     this.getContentPane().removeAll();
                     initDatabaseMenuComponents();
                 }
-            } else if (data.isInStats) {
+            } else if (data.isInStats) { // if player is in the stats menu
                 this.getContentPane().removeAll();
                 initStatsMenuComponents();
-            } else {
+            } else { // player must be in main menu screen
                 this.getContentPane().removeAll();
                 initMainMenuComponents();
             }
 
-        } else {
+        } else { // if player is not logged in
             this.getContentPane().removeAll();
             initLoginComponents();
         }
@@ -267,6 +267,9 @@ public class View extends JFrame implements Observer {
         setVisible(true);
     }
 
+    /*
+    * Initialises the main menu screen components
+    */
     protected void initMainMenuComponents() {
         jPanel2 = new javax.swing.JPanel();
         toStatsBtn = new javax.swing.JButton();
@@ -378,6 +381,9 @@ public class View extends JFrame implements Observer {
         setVisible(true);
     }
 
+    /*
+    * Initialises the game menu screen components
+    */
     private void initGameMenuComponents() {
         jPanel6 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -570,6 +576,9 @@ public class View extends JFrame implements Observer {
 
     }
 
+    /*
+    * Initialises the stats menu screen components
+    */
     private void initStatsMenuComponents() {
         jPanel9 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -665,6 +674,9 @@ public class View extends JFrame implements Observer {
         setVisible(true);
     }
 
+    /*
+    * Initialises the database menu screen components
+    */
     private void initDatabaseMenuComponents() {
         jPanel7 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
@@ -843,21 +855,19 @@ public class View extends JFrame implements Observer {
         setVisible(true);
     }
 
-    // may also need function to update certain views
+    /*
+    * Adds an actionlistener to class
+    */
     public void addActionListener(ActionListener actionListener) {
         this.actionListener = actionListener;
 
-//        //initDatabaseMenuComponents();
-//        initMainMenuComponents();
-//        this.getContentPane().removeAll();
-//        initGameMenuComponents();
-//        this.getContentPane().removeAll();
         initLoginComponents(); // start login screen
 
         setVisible(true);
     }
 
-    // Button handler code
+    // BUTTON HANDLER CODE BELOW ...
+    
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
@@ -902,9 +912,6 @@ public class View extends JFrame implements Observer {
             JOptionPane.showMessageDialog(null, "Word Added: " + newSpanishWord.getText() + " - to " + newEnglishWord.getText());
             data.wordAdded = false;
         }
-
-//        newSpanishWord.setText("");
-//        newEnglishWord.setText("");
     }
 
     private void orderInSpanishWordActionPerformed(java.awt.event.ActionEvent evt) {
@@ -917,10 +924,11 @@ public class View extends JFrame implements Observer {
         } else {
             JOptionPane.showMessageDialog(null, "Word removed: " + this.lastSelectedItem);
         }
-
-        //jList1.setSelectedIndex(0);
     }
 
+    /*
+    * Resets the game configuration options
+    */
     private void deactivateConfig() {
         // deactivate config options
         numCards.setEnabled(false);
@@ -930,12 +938,18 @@ public class View extends JFrame implements Observer {
         cardWord.setEnabled(true);
     }
 
+    /*
+    * Updates the current card on screen
+    */
     private void updateCard() {
         cardWord.setText(data.currentCard.getQuestion());
         cardCountLabel.setText("Card: " + data.cardsRemaining);
         //JOptionPane.showMessageDialog(null, data.currentCard.getQuestion()); // for testing
     }
 
+    /*
+    * Updates the words list on screen with new db data
+    */
     private void updateWordsList() {
         int currentNum = 1;
         dbModel.clear();
@@ -954,6 +968,9 @@ public class View extends JFrame implements Observer {
         jList1.setModel(dbModel);
     }
     
+    /*
+    * Updates the stats screen with new db data
+    */
     protected void updateStats() {
         statsModel.clear();
         

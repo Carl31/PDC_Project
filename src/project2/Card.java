@@ -85,7 +85,4 @@ public class Card {
     public String getLang() {
         return lang;
     }
-    
-    
-    
 }

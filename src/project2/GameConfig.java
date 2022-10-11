@@ -59,11 +59,4 @@ public class GameConfig {
     public void setIsRevision(boolean isRevision) {
         this.isRevision = isRevision;
     }
-    
-    
-    
-    
-    
-    
-    
 }

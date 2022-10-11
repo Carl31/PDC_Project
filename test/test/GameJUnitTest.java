@@ -1,5 +1,5 @@
 /*
- * Test to see if cards are generated correctly.
+ * Test to see if cards are generated correctly and game runs.
  */
 package test;
 
